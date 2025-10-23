@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halwa Café Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { box-sizing: border-box; font-family: "Poppins", sans-serif; }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #ffe0b2, #f7b7b7);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 { margin-top: 30px; color: #5c3d2e; font-size: 2.4rem; }
+    .container {
+      width: 90%;
+      max-width: 1000px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      margin-top: 20px;
+    }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px;
+    }
+    .nav button {
+      padding: 8px 14px;
+      background: #ff6f61;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .nav button:hover { background: #e55b50; }
+    form { margin-bottom: 20px; }
+    input, textarea {
+      width: 100%; padding: 10px; border-radius: 8px;
+      border: 1px solid #ccc; margin-bottom: 10px; font-size: 1rem;
+    }
+    button.save {
+      background: #5c3d2e; color: white; border: none;
+      padding: 10px 20px; border-radius: 8px; cursor: pointer;
+    }
+    table {
+      width: 100%; border-collapse: collapse; margin-top: 10px;
+    }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #ff6f61; color: #fff; }
+    .actions button { margin-right: 5px; padding: 5px 8px; border-radius: 5px; border: none; cursor: pointer; }
+    .edit { background: #5c3d2e; color: #fff; }
+    .delete { background: #d9534f; color: #fff; }
+    #toast {
+      position: fixed; bottom: 20px; right: 20px;
+      background: #5c3d2e; color: white; padding: 12px 20px;
+      border-radius: 8px; opacity: 0; transition: opacity 0.5s;
+    }
+    #toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <h1>☕ Halwa Café Manager</h1>
+
+  <div class="container">
+    <form id="productForm">
+      <input type="hidden" id="productId" />
+      <input type="text" id="name" placeholder="Product name" required />
+      <input type="number" id="price" placeholder="Price ($)" required step="0.01" />
+      <textarea id="description" placeholder="Description"></textarea>
+      <button class="save" type="submit">Save Product</button>
+    </form>
+
+    <table id="productTable">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Price ($)</th><th>Description</th><th>Actions</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    const API_BASE = "/api/products";
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 3000);
+    }
+
+    async function loadProducts() {
+      const res = await fetch(API_BASE);
+      const data = await res.json();
+      const tbody = document.querySelector("#productTable tbody");
+      tbody.innerHTML = "";
+      data.forEach(p => {
+        const row = `
+          <tr>
+            <td>${p.id}</td>
+            <td>${p.name}</td>
+            <td>${p.price}</td>
+            <td>${p.description}</td>
+            <td class="actions">
+              <button class="edit" onclick="editProduct(${p.id}, '${p.name}', ${p.price}, '${p.description}')">Edit</button>
+              <button class="delete" onclick="deleteProduct(${p.id})">Delete</button>
+            </td>
+          </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    async function addOrUpdateProduct(e) {
+      e.preventDefault();
+      const id = document.getElementById("productId").value;
+      const name = document.getElementById("name").value;
+      const price = document.getElementById("price").value;
+      const description = document.getElementById("description").value;
+      const method = id ? "PUT" : "POST";
+      const url = id ? `${API_BASE}/${id}` : API_BASE;
+
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, price, description })
+      });
+      if (res.ok) {
+        showToast(id ? "Product updated" : "Product added");
+        document.getElementById("productForm").reset();
+        loadProducts();
+      }
+    }
+
+    async function deleteProduct(id) {
+      if (confirm("Delete this product?")) {
+        const res = await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
+        if (res.ok) {
+          showToast("Product deleted");
+          loadProducts();
+        }
+      }
+    }
+
+    function editProduct(id, name, price, description) {
+      document.getElementById("productId").value = id;
+      document.getElementById("name").value = name;
+      document.getElementById("price").value = price;
+      document.getElementById("description").value = description;
+      showToast("Editing product...");
+    }
+
+    document.getElementById("productForm").addEventListener("submit", addOrUpdateProduct);
+
+    loadProducts();
+  </script>
+</body>
+</html>
