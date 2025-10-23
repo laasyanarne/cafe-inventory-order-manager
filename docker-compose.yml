@@ -1,0 +1,41 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ledastray1073!
+      MYSQL_DATABASE: smallbiz
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ledastray1073!
+    ports:
+      - "8080:80"
+
+  app:
+    build: ./server
+    container_name: app
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ledastray1073!
+      DB_NAME: smallbiz
+    command: ["node", "wait-for-db.js", "npm", "start"]
+
+volumes:
+  mysql_data:
