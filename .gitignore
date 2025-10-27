@@ -22,3 +22,6 @@ halwa_db_data/
 .vscode/
 .idea/
 .DS_Store
+
+# virtual environment
+venv/

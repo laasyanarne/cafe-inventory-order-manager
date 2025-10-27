@@ -3,7 +3,8 @@ from flask_cors import CORS
 from db import get_connection
 
 app = Flask(__name__)
-CORS(app)  # Allow React frontend to access API
+# Configure CORS for React frontend - simplified configuration
+CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
 
 @app.route("/api/products", methods=["GET"])
 def get_products():
@@ -40,4 +41,4 @@ def delete_product(product_id):
     return jsonify({"message": f"Product {product_id} deleted"}), 200
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)

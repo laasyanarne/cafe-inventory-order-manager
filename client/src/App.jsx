@@ -5,13 +5,13 @@ export default function App() {
   const [form, setForm] = useState({ name: "", description: "", price: "", stock: "" });
 
   const fetchProducts = async () => {
-    const res = await fetch("http://localhost:5000/api/products");
+    const res = await fetch("http://localhost:5001/api/products");
     setProducts(await res.json());
   };
 
   const addProduct = async (e) => {
     e.preventDefault();
-    await fetch("http://localhost:5000/api/products", {
+    await fetch("http://localhost:5001/api/products", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -22,7 +22,7 @@ export default function App() {
 
   const deleteProduct = async (id) => {
     if (!confirm("Delete this product?")) return;
-    await fetch(`http://localhost:5000/api/products/${id}`, { method: "DELETE" });
+    await fetch(`http://localhost:5001/api/products/${id}`, { method: "DELETE" });
     fetchProducts();
   };
 
