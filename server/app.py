@@ -1,44 +1,14 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 from flask_cors import CORS
-from db import get_connection
+from routes import auth_bp, products_bp, employees_bp
 
 app = Flask(__name__)
-# Configure CORS for React frontend - simplified configuration
 CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
 
-@app.route("/api/products", methods=["GET"])
-def get_products():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM products")
-    products = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return jsonify(products)
-
-@app.route("/api/products", methods=["POST"])
-def add_product():
-    data = request.get_json()
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO products (name, description, price, stock) VALUES (%s, %s, %s, %s)",
-        (data["name"], data["description"], data["price"], data["stock"])
-    )
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return jsonify({"message": "Product added successfully!"})
-
-@app.route("/api/products/<int:product_id>", methods=["DELETE"])
-def delete_product(product_id):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM products WHERE id = %s", (product_id,))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return jsonify({"message": f"Product {product_id} deleted"}), 200
+# Register blueprints
+app.register_blueprint(auth_bp, url_prefix="/api/auth")
+app.register_blueprint(products_bp, url_prefix="/api/products")
+app.register_blueprint(employees_bp, url_prefix="/api/employees")
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
