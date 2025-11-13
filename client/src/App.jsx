@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import Dashboard from "./components/Dashboard";
+import ProductsPage from "./pages/ProductsPage";
+import EmployeesPage from "./pages/EmployeesPage";
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -20,14 +22,22 @@ function AppContent() {
     );
   }
 
-  return <Dashboard />;
+  return (
+    <Routes>
+      <Route path="/products" element={<ProductsPage />} />
+      <Route path="/employees" element={<EmployeesPage />} />
+      <Route path="*" element={<Navigate to="/products" replace />} />
+    </Routes>
+  );
 }
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

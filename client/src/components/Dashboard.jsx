@@ -12,6 +12,23 @@ function Dashboard() {
     productListRef.current?.refresh();
   };
 
+  // 🎨 Styled container for products section only
+  const productsContainer = {
+    background: "linear-gradient(to bottom, #fae7d3, #f7c9b6)",
+    borderRadius: "24px",
+    padding: "2rem clamp(1rem, 5vw, 3rem)",
+    boxShadow: "0 12px 35px rgba(80, 50, 30, 0.15)",
+    marginBottom: "2rem",
+  };
+
+  const productsHeader = {
+    fontSize: "2.6rem",
+    fontWeight: 800,
+    marginBottom: "1.75rem",
+    color: "#5d4037",
+    textAlign: "center",
+  };
+
   return (
     <div style={{ padding: "2rem" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
@@ -26,10 +43,13 @@ function Dashboard() {
         </div>
       </div>
 
-      <ProductForm onProductAdded={handleProductAdded} />
-      <div style={{ marginTop: "2rem" }}>
+      {/* 🎨 Styled products section */}
+      <div style={productsContainer}>
+        <h1 style={productsHeader}>🍰 Halwa Bakery & Cafe Inventory</h1>
+        <ProductForm onProductAdded={handleProductAdded} />
         <ProductList ref={productListRef} />
       </div>
+
       <div style={{ marginTop: "2rem" }}>
         <EmployeeList />
       </div>
