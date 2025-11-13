@@ -34,12 +34,18 @@ def manager_required(f):
         from db import get_connection
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT role FROM employees WHERE id = %s", (current_user_id,))
+        cursor.execute("SELECT Access_level FROM `user account` WHERE EID = %s", (current_user_id,))
         user = cursor.fetchone()
         cursor.close()
         conn.close()
         
-        if not user or user['role'] != 'manager':
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        # Map Access_level to role: admin/manager -> 'manager', staff -> 'employee'
+        role = 'manager' if user['Access_level'] in ['admin', 'manager'] else 'employee'
+        
+        if role != 'manager':
             return jsonify({'error': 'Manager access required'}), 403
         
         return f(current_user_id, *args, **kwargs)

@@ -3,6 +3,8 @@ import { useAuth } from "../context/AuthContext";
 import ProductForm from "./ProductForm";
 import ProductList from "./ProductList";
 import EmployeeList from "./EmployeeList";
+import CustomerList from "./CustomerList";
+import ShiftList from "./ShiftList";
 
 function Dashboard() {
   const { user, logout } = useAuth();
@@ -53,6 +55,9 @@ function Dashboard() {
       <div style={{ marginTop: "2rem" }}>
         <EmployeeList />
       </div>
+
+      <CustomerList />
+      <ShiftList />
     </div>
   );
 }
