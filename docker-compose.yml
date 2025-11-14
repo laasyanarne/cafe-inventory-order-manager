@@ -5,7 +5,7 @@ services:
     container_name: smallbiz_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: computer5
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: smallbiz
       MYSQL_USER: user
       MYSQL_PASSWORD: ledastray1073!
@@ -14,11 +14,11 @@ services:
       - "3307:3306"
     volumes:
     ## backup sent to halwa_db_data for restoring purposes 
-      - halwa_db_data:/var/lib/mysql
       - ./smallbiz.sql:/docker-entrypoint-initdb.d/smallbiz.sql
+      - halwa_db_data:/var/lib/mysql
 
   phpmyadmin:
-    image: arm64v8/phpmyadmin
+    image: phpmyadmin/phpmyadmin
     restart: always
     ports:
       - "8080:80"

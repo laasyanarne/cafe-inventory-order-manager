@@ -1,9 +1,15 @@
+import os
 from flask import Flask
 from flask_cors import CORS
 from routes import auth_bp, products_bp, employees_bp, customers_bp, shifts_bp
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+app.config['JWT_SECRET'] = os.getenv('JWT_SECRET')
+
 
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
