@@ -71,12 +71,9 @@ function ProductsPage() {
         <div style={{ color: "#5d4037", fontWeight: 600 }}>
           Welcome, {user.name} ({user.role})
         </div>
-        <button onClick={logout} style={logoutBtn}>
-          Logout
-        </button>
       </div>
       <div style={container}>
-        <h1 style={header}>🍰 Halwa Bakery & Cafe Inventory</h1>
+        <h1 style={header}>📖 Inventory</h1>
         <ProductForm onProductAdded={handleProductAdded} />
         <ProductList ref={productListRef} />
       </div>

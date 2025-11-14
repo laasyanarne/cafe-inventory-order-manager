@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+
+.page-container {
+  padding-top: 80px; /* prevents overlap */
+}
+
+.employees-wrapper {
+  margin-top: 40px; /* 1 inch-ish below navbar */
+}
+

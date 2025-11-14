@@ -1,50 +1,34 @@
 import { useAuth } from "../context/AuthContext";
 import EmployeeList from "../components/EmployeeList";
+import "./EmployeePage.css";
 
 function EmployeesPage() {
   const { user, logout } = useAuth();
 
-  const pageStyle = {
-    padding: "2rem",
-    minHeight: "100vh",
-  };
-
-  const headerStyle = {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "2rem",
-    paddingBottom: "1rem",
-    borderBottom: "2px solid #e0e0e0",
-  };
-
-  const logoutBtn = {
-    padding: "0.5rem 1rem",
-    background: "#d4a373",
-    border: "none",
-    color: "#fff",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontWeight: 600,
-  };
-
   return (
-    <div style={pageStyle}>
-      <div style={headerStyle}>
-        <h1>Employee Management</h1>
-        <div>
-          <span>
-            Welcome, {user.name} ({user.role})
-          </span>
-          <button onClick={logout} style={logoutBtn}>
-            Logout
-          </button>
-        </div>
+    <div className="employees-page">
+      <div className="employees-card">
+        {/* Top bar */}
+        <header className="employees-header">
+          <h1 className="employees-title">👩‍🍳Employee Management👨‍🍳</h1>
+
+          <div className="employees-header-right">
+            <span className="employees-user">
+              Welcome, {user?.name} ({user?.role})
+            </span>
+
+          </div>
+        </header>
+
+        {/* Employees list */}
+        <section>
+          <h2 className="employees-section-title">Employees</h2>
+          {/* EmployeeList already does the data fetch / render */}
+          <EmployeeList />
+        </section>
       </div>
-      <EmployeeList />
     </div>
   );
 }
 
 export default EmployeesPage;
-

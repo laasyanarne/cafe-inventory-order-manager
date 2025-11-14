@@ -16,7 +16,7 @@ credentials.json
 # Docker / DB host data
 db_data/
 halwa_db_data/
-
+docker-compose.yml
 
 # IDE
 .vscode/

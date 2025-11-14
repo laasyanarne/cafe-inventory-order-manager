@@ -40,3 +40,30 @@ def delete_product(current_user_id, product_id):
     conn.close()
     return jsonify({"message": f"Product {product_id} deleted"}), 200
 
+@products_bp.route("/<int:product_id>", methods=["PUT"])
+@token_required
+def update_product(current_user_id, product_id):
+    data = request.get_json()
+
+    name = data.get("name")
+    description = data.get("description")
+    price = data.get("price")
+    stock = data.get("stock")
+
+    if not name or price is None or stock is None:
+        return jsonify({"error": "Missing fields"}), 400
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE products
+        SET name = %s, description = %s, price = %s, stock = %s
+        WHERE id = %s
+    """, (name, description, price, stock, product_id))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"success": True}), 200

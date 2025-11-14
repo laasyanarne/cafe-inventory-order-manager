@@ -5,6 +5,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ProductsPage from "./pages/ProductsPage";
 import EmployeesPage from "./pages/EmployeesPage";
+import Navbar from "./components/Navbar";
+
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -23,11 +25,15 @@ function AppContent() {
   }
 
   return (
+    <>
+    <Navbar />
     <Routes>
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/employees" element={<EmployeesPage />} />
       <Route path="*" element={<Navigate to="/products" replace />} />
     </Routes>
+
+    </>
   );
 }
 

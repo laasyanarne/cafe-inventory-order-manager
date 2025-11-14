@@ -6,7 +6,7 @@ REM ========================================================
 
 echo.
 echo 🐳  Starting Docker containers...
-docker-compose up -d
+docker compose up --build
 
 echo.
 echo 🔥  Starting Flask backend...
