@@ -8,7 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: smallbiz
       MYSQL_USER: user
-      MYSQL_PASSWORD: ledastray1073!
+      MYSQL_PASSWORD: 01370137
       MYSQL_ROOT_HOST: "%"
     ports:
       - "3307:3306"

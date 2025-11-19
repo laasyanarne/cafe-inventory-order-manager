@@ -20,7 +20,10 @@ function Navbar() {
         <ul className="nav-links">
           <li><Link to="/products">Products</Link></li>
           <li><Link to="/employees">Employees</Link></li>
+          <li><Link to="/inventory">Inventory</Link></li>
+          <li><Link to="/stocks">Stocks</Link></li>
           <li><button className="logout-btn" onClick={logout}>Logout</button></li>
+
         </ul>
 
         {/* Hamburger icon */}
@@ -36,7 +39,10 @@ function Navbar() {
         <ul className="mobile-menu">
           <li><Link to="/products" onClick={() => setOpen(false)}>Products</Link></li>
           <li><Link to="/employees" onClick={() => setOpen(false)}>Employees</Link></li>
+          <li><Link to="/inventory">Inventory</Link></li>
+          <li><Link to="/stocks">Stocks</Link></li>
           <li><button className="logout-btn" onClick={logout}>Logout</button></li>
+
         </ul>
       )}
     </nav>

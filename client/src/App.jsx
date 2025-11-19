@@ -6,6 +6,8 @@ import Signup from "./components/Signup";
 import ProductsPage from "./pages/ProductsPage";
 import EmployeesPage from "./pages/EmployeesPage";
 import Navbar from "./components/Navbar";
+import InventoryPage from "./pages/InventoryPage";
+import StocksPage from "./pages/StocksPage";
 
 
 function AppContent() {
@@ -30,6 +32,8 @@ function AppContent() {
     <Routes>
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/employees" element={<EmployeesPage />} />
+      <Route path="/inventory" element={<InventoryPage />} />
+      <Route path="/stocks" element={<StocksPage />} />
       <Route path="*" element={<Navigate to="/products" replace />} />
     </Routes>
 

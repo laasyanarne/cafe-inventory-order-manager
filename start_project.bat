@@ -6,12 +6,13 @@ REM ========================================================
 
 echo.
 echo 🐳  Starting Docker containers...
-docker compose up --build
+docker compose up -d --build
 
 echo.
 echo 🔥  Starting Flask backend...
 cd server
-start cmd /k "python app.py"
+start cmd /k "call venv\Scripts\activate && python app.py"
+
 
 cd ..
 
