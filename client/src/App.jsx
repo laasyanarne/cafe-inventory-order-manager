@@ -9,6 +9,8 @@ import ProductsPage from "./pages/ProductsPage";
 import EmployeesPage from "./pages/EmployeesPage";
 import IngredientsPage from "./pages/IngredientsPage";
 import TransactionsPage from "./pages/TransactionsPage";
+import InventoryPage from "./pages/InventoryPage";
+import StocksPage from "./pages/StocksPage";
 
 import Customers from "./customers";
 import Shifts from "./shifts";
@@ -45,6 +47,8 @@ function AppContent() {
         <Route path="/transactions" element={<TransactionsPage />} />
         <Route path="/customers" element={<Customers />} />
         <Route path="/shifts" element={<Shifts />} />
+        <Route path="/inventory" element={<InventoryPage />} />
+        <Route path="/stocks" element={<StocksPage />} />
         <Route path="*" element={<Navigate to="/products" replace />} />
       </Routes>
     </>

@@ -37,6 +37,12 @@ function Navbar() {
             <Link to="/shifts">Shifts</Link>
           </li>
           <li>
+            <Link to="/inventory">Inventory</Link>
+          </li>
+          <li>
+            <Link to="/stocks">Stocks</Link>
+          </li>
+          <li>
             <button className="logout-btn" onClick={logout}>
               Logout
             </button>
@@ -82,6 +88,16 @@ function Navbar() {
           <li>
             <Link to="/shifts" onClick={() => setOpen(false)}>
               Shifts
+            </Link>
+          </li>
+          <li>
+            <Link to="/inventory" onClick={() => setOpen(false)}>
+              Inventory
+            </Link>
+          </li>
+          <li>
+            <Link to="/stocks" onClick={() => setOpen(false)}>
+              Stocks
             </Link>
           </li>
           <li>
