@@ -5,9 +5,9 @@ import "../assets/Navbar.css";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const { logout, user } = useAuth();
+  const { logout, user } = useAuth(); 
 
-  const toggleMenu = () => setOpen(!open);
+  const toggleMenu = () => setOpen((prev) => !prev);
 
   return (
     <nav className="nav-container">
@@ -18,9 +18,24 @@ function Navbar() {
       <div className="nav-right">
         {/* Desktop menu */}
         <ul className="nav-links">
-          <li><Link to="/products">Products</Link></li>
-          <li><Link to="/employees">Employees</Link></li>
-          <li><button className="logout-btn" onClick={logout}>Logout</button></li>
+          <li>
+            <Link to="/products">Products</Link>
+          </li>
+          <li>
+            <Link to="/employees">Employees</Link>
+          </li>
+          <li>
+            <Link to="/ingredients">Ingredients</Link>
+          </li>
+          <li>
+            <Link to="/transactions">Transactions</Link>
+          </li>
+
+          <li>
+            <button className="logout-btn" onClick={logout}>
+              Logout
+            </button>
+          </li>
         </ul>
 
         {/* Hamburger icon */}
@@ -34,9 +49,32 @@ function Navbar() {
       {/* Mobile dropdown menu */}
       {open && (
         <ul className="mobile-menu">
-          <li><Link to="/products" onClick={() => setOpen(false)}>Products</Link></li>
-          <li><Link to="/employees" onClick={() => setOpen(false)}>Employees</Link></li>
-          <li><button className="logout-btn" onClick={logout}>Logout</button></li>
+          <li>
+            <Link to="/products" onClick={() => setOpen(false)}>
+              Products
+            </Link>
+          </li>
+          <li>
+            <Link to="/employees" onClick={() => setOpen(false)}>
+              Employees
+            </Link>
+          </li>
+          <li>
+            <Link to="/ingredients" onClick={() => setOpen(false)}>
+              Ingredients
+            </Link>
+          </li>
+          <li>
+            <Link to="/transactions" onClick={() => setOpen(false)}>
+              Transactions
+            </Link>
+          </li>
+
+          <li>
+            <button className="logout-btn" onClick={logout}>
+              Logout
+            </button>
+          </li>
         </ul>
       )}
     </nav>
