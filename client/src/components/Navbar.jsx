@@ -20,6 +20,8 @@ function Navbar() {
         <ul className="nav-links">
           <li><Link to="/products">Products</Link></li>
           <li><Link to="/employees">Employees</Link></li>
+          <li><Link to="/customers">Customers</Link></li>  
+          <li><Link to="/shifts">Shifts</Link></li>       
           <li><button className="logout-btn" onClick={logout}>Logout</button></li>
         </ul>
 
@@ -36,6 +38,8 @@ function Navbar() {
         <ul className="mobile-menu">
           <li><Link to="/products" onClick={() => setOpen(false)}>Products</Link></li>
           <li><Link to="/employees" onClick={() => setOpen(false)}>Employees</Link></li>
+          <li><Link to="/customers" onClick={() => setOpen(false)}>Customers</Link></li>  
+          <li><Link to="/shifts" onClick={() => setOpen(false)}>Shifts</Link></li>       
           <li><button className="logout-btn" onClick={logout}>Logout</button></li>
         </ul>
       )}

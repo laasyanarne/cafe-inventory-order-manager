@@ -1,0 +1,283 @@
+/* Reset and container */
+.shifts-container {
+  min-height: 100vh;
+  background-color: #f9f3ed;
+}
+
+/* Page title */
+.page-title {
+  text-align: center;
+  color: #5d4e37;
+  font-size: 2.5em;
+  margin: 0;
+  padding: 2rem 0;
+  background-color: white;
+}
+
+/* Form section */
+.form-section {
+  background: white;
+  padding: 2rem;
+  margin-bottom: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-section h2 {
+  color: #5d4e37;
+  margin-bottom: 1.5rem;
+  font-size: 1.8em;
+  text-align: center;
+}
+
+.shift-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.shift-form select {
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1em;
+  background-color: white;
+  cursor: pointer;
+}
+
+.shift-form select:focus {
+  outline: none;
+  border-color: #d4a574;
+}
+
+.shift-form select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.datetime-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.datetime-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.datetime-field label {
+  font-weight: bold;
+  color: #5d4e37;
+  font-size: 0.95em;
+}
+
+.datetime-field input {
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1em;
+}
+
+.datetime-field input:focus {
+  outline: none;
+  border-color: #d4a574;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn-submit {
+  background-color: #d4a574;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+  background-color: #c08d5a;
+}
+
+.btn-cancel {
+  background-color: #888;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-cancel:hover {
+  background-color: #666;
+}
+
+/* Shifts list section */
+.shifts-list {
+  background: white;
+  padding: 2rem;
+  min-height: 60vh;
+}
+
+.shifts-list h2 {
+  color: #5d4e37;
+  margin-bottom: 2rem;
+  font-size: 1.8em;
+  text-align: center;
+}
+
+.shift-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.shift-card {
+  background: #f9f3ed;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.shift-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.shift-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid #d4a574;
+}
+
+.shift-header h3 {
+  color: #5d4e37;
+  margin: 0;
+  font-size: 1.3em;
+}
+
+.employee-id {
+  background-color: #d4a574;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.shift-details {
+  margin-bottom: 1rem;
+}
+
+.shift-time,
+.shift-duration {
+  color: #666;
+  margin: 0.5rem 0;
+  font-size: 0.95em;
+}
+
+.shift-duration {
+  color: #5d4e37;
+  font-weight: 600;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.shift-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-edit {
+  flex: 1;
+  background-color: #5dade2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-edit:hover {
+  background-color: #3498db;
+}
+
+.btn-delete {
+  flex: 1;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.no-data {
+  text-align: center;
+  color: #999;
+  font-size: 1.1em;
+  padding: 3rem;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.5em;
+  color: #5d4e37;
+  padding: 5rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .datetime-group {
+    grid-template-columns: 1fr;
+  }
+
+  .shift-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shift-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .form-section,
+  .shifts-list {
+    padding: 1.5rem;
+  }
+
+  .page-title {
+    font-size: 2em;
+  }
+}

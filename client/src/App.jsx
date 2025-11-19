@@ -5,8 +5,9 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ProductsPage from "./pages/ProductsPage";
 import EmployeesPage from "./pages/EmployeesPage";
+import Customers from "./Customers"; 
+import Shifts from "./shifts";    
 import Navbar from "./components/Navbar";
-
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -30,6 +31,8 @@ function AppContent() {
     <Routes>
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/employees" element={<EmployeesPage />} />
+      <Route path="/customers" element={<Customers />} />  
+      <Route path="/shifts" element={<Shifts />} />       
       <Route path="*" element={<Navigate to="/products" replace />} />
     </Routes>
 
