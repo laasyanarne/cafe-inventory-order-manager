@@ -18,7 +18,7 @@ function Navbar() {
       <div className="nav-right">
         {/* Desktop menu */}
         <ul className="nav-links">
-          <li><Link to="/products">Products</Link></li>
+          <li><Link to="/products">Menu</Link></li>
           <li><Link to="/employees">Employees</Link></li>
           <li><button className="logout-btn" onClick={logout}>Logout</button></li>
         </ul>

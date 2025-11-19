@@ -14,7 +14,6 @@ function Dashboard() {
     productListRef.current?.refresh();
   };
 
-  // 🎨 Styled container for products section only
   const productsContainer = {
     background: "linear-gradient(to bottom, #fae7d3, #f7c9b6)",
     borderRadius: "24px",
