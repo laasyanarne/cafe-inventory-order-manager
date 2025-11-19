@@ -5,7 +5,7 @@ import "../assets/Navbar.css";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const { logout, user } = useAuth(); 
+  const { logout, user } = useAuth();
 
   const toggleMenu = () => setOpen((prev) => !prev);
 
@@ -30,7 +30,12 @@ function Navbar() {
           <li>
             <Link to="/transactions">Transactions</Link>
           </li>
-
+          <li>
+            <Link to="/customers">Customers</Link>
+          </li>
+          <li>
+            <Link to="/shifts">Shifts</Link>
+          </li>
           <li>
             <button className="logout-btn" onClick={logout}>
               Logout
@@ -69,7 +74,16 @@ function Navbar() {
               Transactions
             </Link>
           </li>
-
+          <li>
+            <Link to="/customers" onClick={() => setOpen(false)}>
+              Customers
+            </Link>
+          </li>
+          <li>
+            <Link to="/shifts" onClick={() => setOpen(false)}>
+              Shifts
+            </Link>
+          </li>
           <li>
             <button className="logout-btn" onClick={logout}>
               Logout

@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+
 import ProductsPage from "./pages/ProductsPage";
 import EmployeesPage from "./pages/EmployeesPage";
-import IngredientsPage from "./pages/IngredientsPage"; // 👈 NEW
-import TransactionsPage from "./pages/TransactionsPage"; 
+import IngredientsPage from "./pages/IngredientsPage";
+import TransactionsPage from "./pages/TransactionsPage";
+
+import Customers from "./customers";
+import Shifts from "./shifts";
+
 import Navbar from "./components/Navbar";
 
 function AppContent() {
@@ -35,8 +41,10 @@ function AppContent() {
       <Routes>
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/employees" element={<EmployeesPage />} />
-        <Route path="/ingredients" element={<IngredientsPage />} /> {/* 👈 NEW */}
+        <Route path="/ingredients" element={<IngredientsPage />} />
         <Route path="/transactions" element={<TransactionsPage />} />
+        <Route path="/customers" element={<Customers />} />
+        <Route path="/shifts" element={<Shifts />} />
         <Route path="*" element={<Navigate to="/products" replace />} />
       </Routes>
     </>

@@ -1,0 +1,218 @@
+/* Reset and container */
+.customers-container {
+  min-height: 100vh;
+  background-color: #f9f3ed;
+}
+
+/* Page title */
+.page-title {
+  text-align: center;
+  color: #5d4e37;
+  font-size: 2.5em;
+  margin: 0;
+  padding: 2rem 0;
+  background-color: white;
+}
+
+/* Form section */
+.form-section {
+  background: white;
+  padding: 2rem;
+  margin-bottom: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-section h2 {
+  color: #5d4e37;
+  margin-bottom: 1.5rem;
+  font-size: 1.8em;
+  text-align: center;
+}
+
+.customer-form {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  max-width: 1400px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.customer-form input {
+  flex: 1;
+  min-width: 250px;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1em;
+}
+
+.customer-form input:focus {
+  outline: none;
+  border-color: #d4a574;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-submit {
+  background-color: #d4a574;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.btn-submit:hover {
+  background-color: #c08d5a;
+}
+
+.btn-cancel {
+  background-color: #888;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.btn-cancel:hover {
+  background-color: #666;
+}
+
+/* Customer list section */
+.customers-list {
+  background: white;
+  padding: 2rem;
+  min-height: 60vh;
+}
+
+.customers-list h2 {
+  color: #5d4e37;
+  margin-bottom: 2rem;
+  font-size: 1.8em;
+  text-align: center;
+}
+
+.customer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.customer-card {
+  background: #f9f3ed;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.customer-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.customer-info h3 {
+  color: #5d4e37;
+  margin-bottom: 0.8rem;
+  font-size: 1.3em;
+}
+
+.customer-info p {
+  color: #666;
+  margin: 0.5rem 0;
+  font-size: 0.95em;
+}
+
+.customer-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-edit {
+  flex: 1;
+  background-color: #5dade2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-edit:hover {
+  background-color: #3498db;
+}
+
+.btn-delete {
+  flex: 1;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.no-data {
+  text-align: center;
+  color: #999;
+  font-size: 1.1em;
+  padding: 3rem;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.5em;
+  color: #5d4e37;
+  padding: 5rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .customer-form {
+    flex-direction: column;
+  }
+
+  .customer-form input {
+    min-width: 100%;
+  }
+
+  .customer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-section,
+  .customers-list {
+    padding: 1.5rem;
+  }
+
+  .page-title {
+    font-size: 2em;
+  }
+}
