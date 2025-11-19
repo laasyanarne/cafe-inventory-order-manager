@@ -13,7 +13,7 @@ services:
     ports:
       - "3307:3306"
     volumes:
-      ## backup sent to halwa_db_data for restoring purposes
+    ## backup sent to halwa_db_data for restoring purposes 
       - ./smallbiz.sql:/docker-entrypoint-initdb.d/smallbiz.sql
       - halwa_db_data:/var/lib/mysql
 
@@ -25,7 +25,7 @@ services:
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: root
-
 volumes:
-  ## ensures that data is never lost, even when rebuilding
+## ensures that data is never lost, even when rebuilding, prob not good for multiple containers?
   halwa_db_data:
+
