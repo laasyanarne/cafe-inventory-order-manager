@@ -1,0 +1,27 @@
+# Node / client
+node_modules/
+dist/
+.vite/
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+
+# env / secrets
+.env
+.env.local
+credentials.json
+
+# Docker / DB host data
+db_data/
+halwa_db_data/
+docker-compose.yml
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# virtual environment
+venv/
