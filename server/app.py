@@ -9,7 +9,15 @@ from routes.shifts import shifts_bp
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+
+CORS(
+    app,
+    resources={r"/api/*": {"origins": ["http://localhost:5173"]}},
+    supports_credentials=True,
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+)
+
 app.config["JWT_SECRET"] = os.getenv("JWT_SECRET")
 
 # Register blueprints

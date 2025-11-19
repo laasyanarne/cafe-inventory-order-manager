@@ -34,7 +34,7 @@ def manager_required(f):
         from db import get_connection
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT Access_level FROM `user account` WHERE EID = %s", (current_user_id,))
+        cursor.execute("SELECT Access_level FROM `user_account` WHERE EID = %s", (current_user_id,))
         user = cursor.fetchone()
         cursor.close()
         conn.close()

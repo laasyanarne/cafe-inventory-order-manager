@@ -73,7 +73,7 @@ function ProductsPage() {
         </div>
       </div>
       <div style={container}>
-        <h1 style={header}>📖 Inventory</h1>
+        <h1 style={header}>📖 Menu</h1>
         <ProductForm onProductAdded={handleProductAdded} />
         <ProductList ref={productListRef} />
       </div>

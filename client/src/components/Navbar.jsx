@@ -19,7 +19,7 @@ function Navbar() {
         {/* Desktop menu */}
         <ul className="nav-links">
           <li>
-            <Link to="/products">Products</Link>
+            <Link to="/products">Menu</Link>
           </li>
           <li>
             <Link to="/employees">Employees</Link>
@@ -56,7 +56,7 @@ function Navbar() {
         <ul className="mobile-menu">
           <li>
             <Link to="/products" onClick={() => setOpen(false)}>
-              Products
+              Menu
             </Link>
           </li>
           <li>
