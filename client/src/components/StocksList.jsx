@@ -24,24 +24,27 @@ const deleteStock = async (eid, ing_id) => {
     });
     load();
   } catch (err) {
-    console.error("❌ Delete failed:", err);
+    console.error(" Delete failed:", err);
     alert(err.response?.data?.error || "Failed to delete stock");
   }
 };
 
 const updateStock = async (eid, ing_id, updated) => {
-  console.log("🧪 SAVING:", eid, ing_id, updated);
   try {
+    const newEid = Number(updated.employee_id || eid);
+    const newIng = Number(updated.ingredient_id || ing_id);
+
     const payload = {
-      employee_id: parseInt(updated.employee_id) || eid,
-      ingredient_id: parseInt(updated.ingredient_id) || ing_id,
+      employee_id: newEid,
+      ingredient_id: newIng,
     };
     await api.put(`/stocks/${eid}/${ing_id}`, payload, {
       headers: { "Content-Type": "application/json" },
     });
-    load();
+
+    await load();
   } catch (err) {
-    console.error("❌ Update failed:", err);
+    console.error(" Update failed:", err);
     alert(err.response?.data?.error || "Failed to update stock");
   }
 };
@@ -56,9 +59,9 @@ const updateStock = async (eid, ing_id, updated) => {
           gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
           gap: "20px"
         }}>
-          {stocks.map((s) => (
+          {stocks.map((s, index) => (
             <StockCard
-              key={`${s.employee_id}-${s.ingredient_id}`}
+              key={`${s.employee_id}-${s.ingredient_id}-${index}`}   //added index to rerender
               stock={s}
               onDelete={() => deleteStock(s.employee_id, s.ingredient_id)}
               onSave={(data) => updateStock(s.employee_id, s.ingredient_id, data)}
@@ -70,7 +73,6 @@ const updateStock = async (eid, ing_id, updated) => {
   );
 });
 
-
 function StockCard({ stock, onDelete, onSave }) {
   const [editing, setEditing] = useState(false);
   const [editData, setEditData] = useState({
@@ -78,22 +80,29 @@ function StockCard({ stock, onDelete, onSave }) {
     ingredient_id: stock.ingredient_id,
   });
 
-  const card = {
-    background: "#fff",
-    border: "1px solid #f1dfcf",
-    borderRadius: "16px",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.08)",
-    padding: "1rem",
+  //typing of inputs
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const input = {
+  //save click
+  const handleSave = () => {
+  onSave(editData);  //updated data
+  setEditing(false);
+  };
+
+
+  const inputStyle = {
     width: "100%",
     padding: ".5rem",
+    marginBottom: ".5rem",
+    border: "1px solid #ccc",
     borderRadius: "8px",
-    border: "1px solid #d7ccc8",
-    fontSize: "0.95rem",
   };
-
   const btn = (color) => ({
     background: color,
     border: "none",
@@ -106,39 +115,41 @@ function StockCard({ stock, onDelete, onSave }) {
   });
 
   return (
-    <div style={card}>
+    <div
+      style={{
+        background: "#fff",
+        border: "1px solid #ddd",
+        borderRadius: "12px",
+        padding: "1rem",
+        marginBottom: "1rem",
+      }}
+    >
       {editing ? (
         <>
           <input
-            style={input}
+            style={inputStyle}
+            name="employee_id"
             type="number"
             value={editData.employee_id}
-            onChange={(e) => setEditData({ ...editData, employee_id: e.target.value })}
+            onChange={handleChange}
           />
           <input
-            style={input}
+            style={inputStyle}
+            name="ingredient_id"
             type="number"
             value={editData.ingredient_id}
-            onChange={(e) => setEditData({ ...editData, ingredient_id: e.target.value })}
+            onChange={handleChange}
           />
-          <button
-            style={btn("#81c784")}
-            onClick={() => {
-              console.log("🧪 SAVING:", stock.employee_id, stock.ingredient_id, editData);
-              onSave(stock.employee_id, stock.ingredient_id, editData);
-              setEditing(false);
-            }}
-          >
-            Save
-          </button>
-
+          <button style={btn("#81c784")} onClick={handleSave}>Save</button>
           <button style={btn("#ffb74d")} onClick={() => setEditing(false)}>
             Cancel
           </button>
         </>
       ) : (
         <>
-          <strong>Employee #{stock.employee_id}</strong> — Ingredient #{stock.ingredient_id}
+          <strong>Employee #{stock.employee_id}</strong> — Ingredient #
+          {stock.ingredient_id}
+          <br />
           <button style={btn("#64b5f6")} onClick={() => setEditing(true)}>
             Edit
           </button>

@@ -19,7 +19,7 @@ function InventoryPage() {
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "flex-start",
-  padding: "6rem 1rem 2rem", // ✅ Add top padding to account for navbar
+  padding: "6rem 1rem 2rem", //padding for nav bar
   boxSizing: "border-box",
   };
 
@@ -36,7 +36,7 @@ function InventoryPage() {
   return (
     <div style={pageStyle}>
       <div style={containerStyle}>
-        <h1 style={{ textAlign: "center", color: "#5d4037" }}>📦 Inventory Management</h1>
+        <h1 style={{ textAlign: "center", color: "#5d4037" }}>🧺 Inventory Management</h1>
         <InventoryForm onAdded={refresh} />
         <InventoryList ref={listRef} />
       </div>

@@ -4,7 +4,22 @@ from middleware import token_required
 
 inventory_bp = Blueprint("inventory", __name__)
 
-# ✅ READ all inventory
+#auto increment
+try:
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        ALTER TABLE inventory
+        MODIFY Inv_ID INT NOT NULL AUTO_INCREMENT;
+    """)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    print("Ensured Inv_ID is AUTO_INCREMENT.")
+except Exception as e:
+    print("Auto-increment setup already configured:", e)
+
+#READ
 @inventory_bp.route("", methods=["GET"])
 def get_inventory():
     conn = get_connection()
@@ -20,7 +35,7 @@ def get_inventory():
     conn.close()
     return jsonify(data)
 
-# ✅ CREATE inventory item
+#CREATE
 @inventory_bp.route("", methods=["POST"])
 @token_required
 def add_inventory(current_user_id):
@@ -36,7 +51,7 @@ def add_inventory(current_user_id):
     conn.close()
     return jsonify({"message": "Inventory item added!"}), 201
 
-# ✅ UPDATE inventory item
+#UPDATE
 @inventory_bp.route("/<int:item_id>", methods=["PUT"])
 @token_required
 def update_inventory(current_user_id, item_id):
@@ -54,7 +69,7 @@ def update_inventory(current_user_id, item_id):
     conn.close()
     return jsonify({"message": "Inventory updated!"}), 200
 
-# ✅ DELETE inventory item
+#DELETE
 @inventory_bp.route("/<int:item_id>", methods=["DELETE"])
 @token_required
 def delete_inventory(current_user_id, item_id):

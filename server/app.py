@@ -16,7 +16,7 @@ CORS(
     app,
     origins=["http://localhost:5173"],
     supports_credentials=True,
-    resources={r"/api/*": {"origins": "*"}},  # ✅ ADD THIS LINE
+    resources={r"/api/*": {"origins": "*"}},  
     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization"]
 )
