@@ -79,19 +79,33 @@ function InventoryCard({ item, onDelete, onSave }) {
     }}>
       {editing ? (
         <>
-          <input style={input} value={editData.name} onChange={(e) => setEditData({ ...editData, name: e.target.value })} />
-          <input style={input} value={editData.location} onChange={(e) => setEditData({ ...editData, location: e.target.value })} />
-          <input style={input} type="number" value={editData.stock_level}
-            onChange={(e) => setEditData({ ...editData, stock_level: e.target.value })} />
-          <textarea style={{ ...input, height: "60px" }} value={editData.description}
-            onChange={(e) => setEditData({ ...editData, description: e.target.value })} />
-          <button style={btn("#81c784")} onClick={() => { onSave(item.id, editData); setEditing(false); }}>Save</button>
+          <input
+            style={input}
+            type="number"
+            step="0.01"
+            value={editData.temperature ?? ""}
+            onChange={(e) => setEditData({ ...editData, temperature: e.target.value })}
+            placeholder="Temperature"
+          />
+          <input
+            style={input}
+            value={editData.location ?? ""}
+            onChange={(e) => setEditData({ ...editData, location: e.target.value })}
+            placeholder="Storage Location"
+          />
+          <button
+            style={btn("#81c784")}
+            onClick={() => { onSave(item.id, editData); setEditing(false); }}
+          >
+            Save
+          </button>
           <button style={btn("#ffb74d")} onClick={() => setEditing(false)}>Cancel</button>
         </>
       ) : (
         <>
-          <strong>{item.name}</strong> — {item.stock_level} in stock ({item.location})
-          <p style={{ fontSize: "0.9rem", color: "#6d4c41" }}>{item.description}</p>
+          <strong>Inventory #{item.id}</strong>
+          <p>Temperature: {item.temperature ?? "N/A"}</p>
+          <p>Location: {item.location ?? "N/A"}</p>
           <button style={btn("#64b5f6")} onClick={() => setEditing(true)}>Edit</button>
           <button style={btn("#e57373")} onClick={() => onDelete(item.id)}>Delete</button>
         </>

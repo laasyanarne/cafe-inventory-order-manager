@@ -2,7 +2,7 @@ import { useState } from "react";
 import api from "../utils/api";
 
 function StocksForm({ onAdded }) {
-  // include employee_id field
+  //employee_id field
   const [form, setForm] = useState({ employee_id: "", ingredient_id: "" });
 
   const handleSubmit = async (e) => {
