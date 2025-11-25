@@ -4,8 +4,9 @@ import api from "../utils/api";
 function TransactionForm({ mode = "create", initialData, onSaved, onCancel }) {
   const isEdit = mode === "edit";
 
+  // use product_id now (not menu_id)
   const [customerId, setCustomerId] = useState("");
-  const [items, setItems] = useState([{ menu_id: "", qty: 1 }]);
+  const [items, setItems] = useState([{ product_id: "", qty: 1 }]);
   const [submitting, setSubmitting] = useState(false);
 
   // When initialData changes (edit vs. new), prefill fields
@@ -14,13 +15,14 @@ function TransactionForm({ mode = "create", initialData, onSaved, onCancel }) {
       setCustomerId(initialData.customer_id ?? "");
       setItems(
         (initialData.items || []).map((it) => ({
-          menu_id: it.menu_id,
+          // backend now returns product_id
+          product_id: it.product_id,
           qty: it.qty,
         }))
       );
     } else {
       setCustomerId("");
-      setItems([{ menu_id: "", qty: 1 }]);
+      setItems([{ product_id: "", qty: 1 }]);
     }
   }, [initialData]);
 
@@ -33,25 +35,28 @@ function TransactionForm({ mode = "create", initialData, onSaved, onCancel }) {
   };
 
   const addRow = () => {
-    setItems((prev) => [...prev, { menu_id: "", qty: 1 }]);
+    setItems((prev) => [...prev, { product_id: "", qty: 1 }]);
   };
 
   const removeRow = (index) => {
-    setItems((prev) => (prev.length === 1 ? prev : prev.filter((_, i) => i !== index)));
+    setItems((prev) =>
+      prev.length === 1 ? prev : prev.filter((_, i) => i !== index)
+    );
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // clean + coerce to numbers, using product_id
     const cleanedItems = items
       .map((r) => ({
-        menu_id: r.menu_id ? Number(r.menu_id) : null,
+        product_id: r.product_id ? Number(r.product_id) : null,
         qty: r.qty ? Number(r.qty) : null,
       }))
-      .filter((r) => r.menu_id && r.qty);
+      .filter((r) => r.product_id && r.qty);
 
     if (cleanedItems.length === 0) {
-      alert("Please add at least one valid line item (menu ID + quantity).");
+      alert("Please add at least one valid line item (product ID + quantity).");
       return;
     }
 
@@ -70,7 +75,7 @@ function TransactionForm({ mode = "create", initialData, onSaved, onCancel }) {
 
       if (!isEdit) {
         setCustomerId("");
-        setItems([{ menu_id: "", qty: 1 }]);
+        setItems([{ product_id: "", qty: 1 }]);
       }
 
       onSaved && onSaved();
@@ -82,7 +87,7 @@ function TransactionForm({ mode = "create", initialData, onSaved, onCancel }) {
     }
   };
 
-  // --- styles (inline, consistent with other pages) ---
+  // --- styles ---
   const wrapper = {
     marginBottom: "1.75rem",
     padding: "1.25rem 1.5rem",
@@ -179,10 +184,10 @@ function TransactionForm({ mode = "create", initialData, onSaved, onCancel }) {
             style={input}
             type="number"
             min="1"
-            placeholder="Menu ID"
-            value={line.menu_id}
+            placeholder="Product ID"
+            value={line.product_id}
             onChange={(e) =>
-              updateItemField(index, "menu_id", e.target.value)
+              updateItemField(index, "product_id", e.target.value)
             }
           />
           <input
