@@ -11,6 +11,7 @@ import IngredientsPage from "./pages/IngredientsPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import InventoryPage from "./pages/InventoryPage";
 import StocksPage from "./pages/StocksPage";
+import ReportsPage from "./pages/ReportsPage";   
 
 import Customers from "./customers";
 import Shifts from "./shifts";
@@ -45,6 +46,7 @@ function AppContent() {
         <Route path="/employees" element={<EmployeesPage />} />
         <Route path="/ingredients" element={<IngredientsPage />} />
         <Route path="/transactions" element={<TransactionsPage />} />
+        <Route path="/reports" element={<ReportsPage />} />      
         <Route path="/customers" element={<Customers />} />
         <Route path="/shifts" element={<Shifts />} />
         <Route path="/inventory" element={<InventoryPage />} />

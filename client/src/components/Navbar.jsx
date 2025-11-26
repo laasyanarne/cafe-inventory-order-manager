@@ -5,7 +5,7 @@ import "../assets/Navbar.css";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
 
   const toggleMenu = () => setOpen((prev) => !prev);
 
@@ -29,6 +29,9 @@ function Navbar() {
           </li>
           <li>
             <Link to="/transactions">Transactions</Link>
+          </li>
+          <li>
+            <Link to="/reports">Reports</Link> 
           </li>
           <li>
             <Link to="/customers">Customers</Link>
@@ -79,6 +82,11 @@ function Navbar() {
             <Link to="/transactions" onClick={() => setOpen(false)}>
               Transactions
             </Link>
+          </li>
+          <li>
+            <Link to="/reports" onClick={() => setOpen(false)}>
+              Reports
+            </Link> 
           </li>
           <li>
             <Link to="/customers" onClick={() => setOpen(false)}>

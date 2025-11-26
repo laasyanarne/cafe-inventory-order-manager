@@ -14,4 +14,5 @@ __all__ = [
     "shifts_bp",
     "ingredients_bp",
     "transactions_bp", 
+    "reports_bp",
 ]

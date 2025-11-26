@@ -9,6 +9,7 @@ from routes.customers import customers_bp
 from routes.shifts import shifts_bp
 from routes.inventory import inventory_bp
 from routes.stocks import stocks_bp
+from routes.reports import reports_bp
 
 load_dotenv()
 
@@ -36,6 +37,7 @@ app.register_blueprint(ingredients_bp, url_prefix="/api/ingredients")
 app.register_blueprint(transactions_bp, url_prefix="/api/transactions")
 app.register_blueprint(inventory_bp, url_prefix="/api/inventory")
 app.register_blueprint(stocks_bp, url_prefix="/api/stocks")
+app.register_blueprint(reports_bp, url_prefix="/api/reports")
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
