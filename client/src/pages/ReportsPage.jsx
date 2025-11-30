@@ -1,5 +1,8 @@
 import TopProductsReport from "../components/TopProductsReport";
 import AvgTransactionReport from "../components/AvgTransactionReport";
+import TotalRevenueReport from "../components/TotalRevenueReport";
+import CustomerCountReport from "../components/CustomerCountReport";
+import LowestPriceReport from "../components/LowestPriceReport";
 import "./ReportsPage.css";
 
 function ReportsPage() {
@@ -12,13 +15,14 @@ function ReportsPage() {
             High-level insights from sales and transactions
           </p>
         </header>
-
-        <div className="reports-grid">
-          {/* Left: Top products chart */}
-          <TopProductsReport />
-
-          {/* Right: Average transaction card */}
+        <div className="kpi-row">
+          <TotalRevenueReport />
           <AvgTransactionReport />
+          <CustomerCountReport />
+        </div>
+        <div className="reports-grid">
+          <TopProductsReport />
+          <LowestPriceReport />
         </div>
       </div>
     </div>

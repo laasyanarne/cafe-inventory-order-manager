@@ -1,4 +1,3 @@
-# server/routes/reports.py
 from flask import Blueprint, jsonify
 from db import get_connection
 from middleware import token_required
@@ -8,9 +7,6 @@ reports_bp = Blueprint("reports", __name__)
 @reports_bp.route("/top-products", methods=["GET"])
 @token_required
 def top_products(current_user_id):
-    """
-    Most popular products by total quantity sold.
-    """
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -40,9 +36,6 @@ def top_products(current_user_id):
 @reports_bp.route("/avg-transaction", methods=["GET"])
 @token_required
 def avg_transaction(current_user_id):
-    """
-    Average transaction value across all transactions.
-    """
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -67,4 +60,102 @@ def avg_transaction(current_user_id):
         return jsonify(row), 200
     except Exception as e:
         print(f"Error fetching avg transaction: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@reports_bp.route("/total-revenue", methods=["GET"])
+@token_required
+def total_revenue(current_user_id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT SUM(p.price * ti.Quantity) AS total_revenue
+            FROM transaction_items ti
+            JOIN products p ON ti.product_id = p.id
+        """)
+
+        row = cursor.fetchone()
+        cursor.close()
+        conn.close()
+
+        # Return 0 if no revenue instead of null
+        result = {
+            'total_revenue': float(row['total_revenue']) if row['total_revenue'] else 0
+        }
+
+        return jsonify(result), 200
+    except Exception as e:
+        print(f"Error fetching total revenue: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@reports_bp.route("/customer-count", methods=["GET"])
+@token_required
+def customer_count(current_user_id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT COUNT(DISTINCT CID) AS customer_count
+            FROM transactions
+        """)
+
+        row = cursor.fetchone()
+        cursor.close()
+        conn.close()
+
+        result = {
+            'customer_count': int(row['customer_count']) if row['customer_count'] else 0
+        }
+
+        return jsonify(result), 200
+    except Exception as e:
+        print(f"Error fetching customer count: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@reports_bp.route("/lowest-price", methods=["GET"])
+@token_required
+def lowest_price(current_user_id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT MIN(price) AS lowest_price
+            FROM products
+            WHERE price > 0
+        """)
+
+        row = cursor.fetchone()
+        
+        # Get the product name with this lowest price
+        lowest = row['lowest_price']
+        product_name = None
+        
+        if lowest:
+            cursor.execute("""
+                SELECT name
+                FROM products
+                WHERE price = %s
+                LIMIT 1
+            """, (lowest,))
+            product_row = cursor.fetchone()
+            if product_row:
+                product_name = product_row['name']
+
+        cursor.close()
+        conn.close()
+
+        result = {
+            'lowest_price': float(lowest) if lowest else 0,
+            'product_name': product_name
+        }
+
+        return jsonify(result), 200
+    except Exception as e:
+        print(f"Error fetching lowest price: {e}")
         return jsonify({"error": str(e)}), 500

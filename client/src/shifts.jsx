@@ -81,7 +81,6 @@ function Shifts() {
   };
 
   const handleEdit = (shift) => {
-    // Convert time format (HH:MM:SS) to datetime-local format
     const today = new Date().toISOString().split('T')[0];
     const startTime = shift.start_time ? `${today}T${shift.start_time.slice(0, 5)}` : '';
     const endTime = shift.end_time ? `${today}T${shift.end_time.slice(0, 5)}` : '';
@@ -114,13 +113,11 @@ function Shifts() {
 
   const formatDateTime = (timeString) => {
     if (!timeString) return 'N/A';
-    // timeString is in format "HH:MM:SS"
-    return timeString.slice(0, 5); // Return "HH:MM"
+    return timeString.slice(0, 5); 
   };
 
   const calculateDuration = (start, end) => {
     if (!start || !end) return 'N/A';
-    // Parse time strings (HH:MM:SS)
     const [startHour, startMin] = start.split(':').map(Number);
     const [endHour, endMin] = end.split(':').map(Number);
     
@@ -135,120 +132,130 @@ function Shifts() {
   };
 
   if (loading) {
-    return <div className="loading">Loading shifts...</div>;
+    return (
+      <div className="shifts-page">
+        <div className="shifts-card">
+          <div className="loading">Loading shifts...</div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="shifts-container">
-      <h1 className="page-title">🕐 Shift Management</h1>
+    <div className="shifts-page">
+      <div className="shifts-card">
+        <header className="shifts-header">
+          <h1 className="shifts-title">Shift Management</h1>
+        </header>
 
-      <div className="form-section">
-        <h2>{editingShift ? 'Edit Shift' : 'Add New Shift'}</h2>
+        <div className="form-section">
+          <h2>{editingShift ? 'Edit Shift' : 'Add New Shift'}</h2>
 
-        <form onSubmit={handleSubmit} className="shift-form">
-          <select
-            name="eid"
-            value={formData.eid}
-            onChange={handleInputChange}
-            required
-            disabled={editingShift !== null}
-          >
-            <option value="">Select Employee</option>
-            {employees.map((emp) => (
-              <option key={emp.eid} value={emp.eid}>
-                {emp.name} (ID: {emp.eid})
-              </option>
-            ))}
-          </select>
-
-          <div className="datetime-group">
-            <div className="datetime-field">
-              <label>Start Time</label>
-              <input
-                type="datetime-local"
-                name="start_time"
-                value={formData.start_time}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-            <div className="datetime-field">
-              <label>End Time</label>
-              <input
-                type="datetime-local"
-                name="end_time"
-                value={formData.end_time}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="form-buttons">
-            <button type="submit" className="btn-submit">
-              {editingShift ? 'Update Shift' : 'Add Shift'}
-            </button>
-
-            {editingShift && (
-              <button
-                type="button"
-                className="btn-cancel"
-                onClick={handleCancelEdit}
-              >
-                Cancel
-              </button>
-            )}
-          </div>
-        </form>
-      </div>
-
-      <div className="shifts-list">
-        <h2>Scheduled Shifts</h2>
-
-        <div className="shift-grid">
-          {shifts.map((shift, index) => (
-            <div
-              key={`${shift.eid}-${shift.start_time}-${index}`}
-              className="shift-card"
+          <form onSubmit={handleSubmit} className="shift-form">
+            <select
+              name="eid"
+              value={formData.eid}
+              onChange={handleInputChange}
+              required
+              disabled={editingShift !== null}
             >
-              <div className="shift-header">
-                <h3>{shift.employee_name}</h3>
-                <span className="employee-id">ID: {shift.eid}</span>
+              <option value="">Select Employee</option>
+              {employees.map((emp) => (
+                <option key={emp.eid} value={emp.eid}>
+                  {emp.name} (ID: {emp.eid})
+                </option>
+              ))}
+            </select>
+
+            <div className="datetime-group">
+              <div className="datetime-field">
+                <label>Start Time</label>
+                <input
+                  type="datetime-local"
+                  name="start_time"
+                  value={formData.start_time}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
 
-              <div className="shift-details">
-                <div className="shift-time">
-                  <strong>Start:</strong> {formatDateTime(shift.start_time)}
-                </div>
-                <div className="shift-time">
-                  <strong>End:</strong> {formatDateTime(shift.end_time)}
-                </div>
-                <div className="shift-duration">
-                  <strong>Duration:</strong>{' '}
-                  {calculateDuration(shift.start_time, shift.end_time)}
-                </div>
-              </div>
-
-              <div className="shift-actions">
-                <button className="btn-edit" onClick={() => handleEdit(shift)}>
-                  Edit
-                </button>
-
-                <button
-                  className="btn-delete"
-                  onClick={() => handleDelete(shift)}
-                >
-                  Delete
-                </button>
+              <div className="datetime-field">
+                <label>End Time</label>
+                <input
+                  type="datetime-local"
+                  name="end_time"
+                  value={formData.end_time}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
             </div>
-          ))}
+
+            <div className="form-buttons">
+              <button type="submit" className="btn-submit">
+                {editingShift ? 'Update Shift' : 'Add Shift'}
+              </button>
+
+              {editingShift && (
+                <button
+                  type="button"
+                  className="btn-cancel"
+                  onClick={handleCancelEdit}
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
+          </form>
         </div>
 
-        {shifts.length === 0 && (
-          <p className="no-data">No shifts scheduled. Add your first shift!</p>
-        )}
+        <div className="shifts-list">
+          <h2>Scheduled Shifts</h2>
+
+          {shifts.length === 0 ? (
+            <p className="no-data">No shifts scheduled. Add your first shift!</p>
+          ) : (
+            <div className="shift-grid">
+              {shifts.map((shift, index) => (
+                <div
+                  key={`${shift.eid}-${shift.start_time}-${index}`}
+                  className="shift-card"
+                >
+                  <div className="shift-header">
+                    <h3>{shift.employee_name}</h3>
+                    <span className="employee-id">ID: {shift.eid}</span>
+                  </div>
+
+                  <div className="shift-details">
+                    <div className="shift-time">
+                      <strong>Start:</strong> {formatDateTime(shift.start_time)}
+                    </div>
+                    <div className="shift-time">
+                      <strong>End:</strong> {formatDateTime(shift.end_time)}
+                    </div>
+                    <div className="shift-duration">
+                      <strong>Duration:</strong>{' '}
+                      {calculateDuration(shift.start_time, shift.end_time)}
+                    </div>
+                  </div>
+
+                  <div className="shift-actions">
+                    <button className="btn-edit" onClick={() => handleEdit(shift)}>
+                      Edit
+                    </button>
+
+                    <button
+                      className="btn-delete"
+                      onClick={() => handleDelete(shift)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -66,9 +66,14 @@ def create_customer(current_user_id):
         
         conn = get_connection()
         cursor = conn.cursor()
+        
+        # Get the next CID
+        cursor.execute("SELECT IFNULL(MAX(CID), 0) + 1 FROM customer")
+        next_cid = cursor.fetchone()[0]
+        
         cursor.execute(
-            "INSERT INTO customer (Name, Contact) VALUES (%s, %s)",
-            (name, contact)
+            "INSERT INTO customer (CID, Name, Contact) VALUES (%s, %s, %s)",
+            (next_cid, name, contact)
         )
         conn.commit()
         cursor.close()

@@ -1,4 +1,4 @@
-version: "3.8"
+##version: "3.8"
 services:
   db:
     image: mysql:8.0
@@ -8,7 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: smallbiz
       MYSQL_USER: user
-      MYSQL_PASSWORD: California~998
+      MYSQL_PASSWORD: Mp43650.
       MYSQL_ROOT_HOST: "%"
     ports:
       - "3307:3306"
@@ -18,7 +18,7 @@ services:
       - halwa_db_data:/var/lib/mysql
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: arm64v8/phpmyadmin
     restart: always
     ports:
       - "8080:80"
@@ -28,4 +28,4 @@ services:
 volumes:
 ## ensures that data is never lost, even when rebuilding, prob not good for multiple containers?
   halwa_db_data:
-
+   ## external: true

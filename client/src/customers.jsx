@@ -83,87 +83,97 @@ function Customers() {
   };
 
   if (loading) {
-    return <div className="loading">Loading customers...</div>;
+    return (
+      <div className="customers-page">
+        <div className="customers-card">
+          <div className="loading">Loading customers...</div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="customers-container">
-      <h1 className="page-title">👥 Customer Management</h1>
+    <div className="customers-page">
+      <div className="customers-card">
+        <header className="customers-header">
+          <h1 className="customers-title">Customer Management</h1>
+        </header>
 
-      <div className="form-section">
-        <h2>{editingId ? 'Edit Customer' : 'Add New Customer'}</h2>
+        <div className="form-section">
+          <h2>{editingId ? 'Edit Customer' : 'Add New Customer'}</h2>
 
-        <form onSubmit={handleSubmit} className="customer-form">
-          <input
-            type="text"
-            name="name"
-            placeholder="Customer Name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-          />
+          <form onSubmit={handleSubmit} className="customer-form">
+            <input
+              type="text"
+              name="name"
+              placeholder="Customer Name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
 
-          <input
-            type="text"
-            name="contact"
-            placeholder="Contact Info"
-            value={formData.contact}
-            onChange={handleInputChange}
-            required
-          />
+            <input
+              type="text"
+              name="contact"
+              placeholder="Contact Info"
+              value={formData.contact}
+              onChange={handleInputChange}
+              required
+            />
 
-          <div className="form-buttons">
-            <button type="submit" className="btn-submit">
-              {editingId ? 'Update Customer' : 'Add Customer'}
-            </button>
-
-            {editingId && (
-              <button
-                type="button"
-                className="btn-cancel"
-                onClick={handleCancelEdit}
-              >
-                Cancel
+            <div className="form-buttons">
+              <button type="submit" className="btn-submit">
+                {editingId ? 'Update Customer' : 'Add Customer'}
               </button>
-            )}
-          </div>
-        </form>
-      </div>
 
-      <div className="customers-list">
-        <h2>Customer List</h2>
-
-        <div className="customer-grid">
-          {customers.map((customer) => (
-            <div key={customer.cid} className="customer-card">
-              <div className="customer-info">
-                <h3>{customer.name}</h3>
-                <p><strong>ID:</strong> {customer.cid}</p>
-                <p><strong>Contact:</strong> {customer.contact}</p>
-              </div>
-
-              <div className="customer-actions">
+              {editingId && (
                 <button
-                  className="btn-edit"
-                  onClick={() => handleEdit(customer)}
+                  type="button"
+                  className="btn-cancel"
+                  onClick={handleCancelEdit}
                 >
-                  Edit
+                  Cancel
                 </button>
-
-                <button
-                  className="btn-delete"
-                  onClick={() => handleDelete(customer.cid)}
-                >
-                  Delete
-                </button>
-              </div>
+              )}
             </div>
-          ))}
+          </form>
         </div>
 
-        {customers.length === 0 && (
-          <p className="no-data">No customers found. Add your first customer!</p>
-        )}
+        <div className="customers-list">
+          <h2>Customer List</h2>
+
+          {customers.length === 0 ? (
+            <p className="no-data">No customers found. Add your first customer!</p>
+          ) : (
+            <div className="customer-grid">
+              {customers.map((customer) => (
+                <div key={customer.cid} className="customer-card">
+                  <div className="customer-info">
+                    <h3>{customer.name}</h3>
+                    <p><strong>ID:</strong> {customer.cid}</p>
+                    <p><strong>Contact:</strong> {customer.contact}</p>
+                  </div>
+
+                  <div className="customer-actions">
+                    <button
+                      className="btn-edit"
+                      onClick={() => handleEdit(customer)}
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      className="btn-delete"
+                      onClick={() => handleDelete(customer.cid)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
