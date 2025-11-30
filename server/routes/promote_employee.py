@@ -253,3 +253,43 @@ def delete_employee(current_user_id, employee_id):
     finally:
         cursor.close()
         conn.close()
+
+
+@employees_bp.route("/me/password", methods=["PUT"])
+@token_required
+def change_password(current_user_id):
+    data = request.get_json()
+    old_pw = data.get("old_password")
+    new_pw = data.get("new_password")
+
+    if not old_pw or not new_pw:
+        return jsonify({"error": "Both old and new passwords are required"}), 400
+
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Fetch user's hashed password
+    cursor.execute("SELECT password_hash FROM user_account WHERE EID = %s", (current_user_id,))
+    user = cursor.fetchone()
+
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Verify old password
+    if not bcrypt.checkpw(old_pw.encode(), user["password_hash"].encode()):
+        return jsonify({"error": "Incorrect current password"}), 401
+
+    # Hash new password
+    hashed_new = bcrypt.hashpw(new_pw.encode(), bcrypt.gensalt()).decode()
+
+    cursor.execute("""
+        UPDATE user_account
+        SET password_hash = %s
+        WHERE EID = %s
+    """, (hashed_new, current_user_id))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"message": "Password updated successfully!"}), 200
