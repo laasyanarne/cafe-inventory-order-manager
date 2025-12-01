@@ -39,7 +39,15 @@
   color: #7b4b32;
 }
 
-/* -------- KPI row -------- */
+/* -------- Divider between sections -------- */
+
+.reports-divider {
+  height: 2px;
+  background: linear-gradient(to right, transparent, #f0ddd0, transparent);
+  margin: 3rem 0 2.5rem;
+}
+
+/* -------- KPI row (3 cards across) -------- */
 
 .kpi-row {
   display: grid;
@@ -160,6 +168,75 @@
   opacity: 0.9;
 }
 
+/* -------- Employee Report Section -------- */
+
+.employee-report-section {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #f0ddd0;
+  padding: 2rem;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+}
+
+.employee-report-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #4b2b24;
+  margin: 0 0 1.5rem 0;
+}
+
+.chart-subtitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #4b2b24;
+  margin: 2rem 0 1rem 0;
+}
+
+/* -------- Employee Table -------- */
+
+.employee-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.employee-table thead {
+  background: #ffecb3;
+}
+
+.employee-table th,
+.employee-table td {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid #f0ddd0;
+}
+
+.employee-table th {
+  font-weight: 700;
+  color: #4b2b24;
+  font-size: 0.95rem;
+}
+
+.employee-table td {
+  color: #5d4037;
+  font-size: 0.9rem;
+}
+
+.employee-table tbody tr:hover {
+  background: #fff8f1;
+}
+
+.employee-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
 /* -------- Responsive tweaks -------- */
 
 @media (max-width: 1024px) {
@@ -184,6 +261,10 @@
   .kpi-card {
     min-height: 160px;
   }
+
+  .employee-report-section {
+    padding: 1.5rem;
+  }
 }
 
 @media (max-width: 600px) {
@@ -197,5 +278,11 @@
 
   .kpi-value {
     font-size: 2rem;
+  }
+
+  .employee-table th,
+  .employee-table td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
   }
 }

@@ -66,6 +66,7 @@ def avg_transaction(current_user_id):
 @reports_bp.route("/total-revenue", methods=["GET"])
 @token_required
 def total_revenue(current_user_id):
+    """Total revenue generated from all transactions."""
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -80,7 +81,6 @@ def total_revenue(current_user_id):
         cursor.close()
         conn.close()
 
-        # Return 0 if no revenue instead of null
         result = {
             'total_revenue': float(row['total_revenue']) if row['total_revenue'] else 0
         }
@@ -94,6 +94,7 @@ def total_revenue(current_user_id):
 @reports_bp.route("/customer-count", methods=["GET"])
 @token_required
 def customer_count(current_user_id):
+    """Count of unique customers who have made transactions."""
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -120,6 +121,7 @@ def customer_count(current_user_id):
 @reports_bp.route("/lowest-price", methods=["GET"])
 @token_required
 def lowest_price(current_user_id):
+    """Lowest price point on the menu."""
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -131,8 +133,6 @@ def lowest_price(current_user_id):
         """)
 
         row = cursor.fetchone()
-        
-        # Get the product name with this lowest price
         lowest = row['lowest_price']
         product_name = None
         
@@ -158,4 +158,34 @@ def lowest_price(current_user_id):
         return jsonify(result), 200
     except Exception as e:
         print(f"Error fetching lowest price: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@reports_bp.route("/employee/shifts", methods=["GET"])
+@token_required
+def employee_shift_summary(current_user_id):
+    """Employee shift summary with total shifts, hours, and averages."""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        
+        cursor.execute("""
+            SELECT 
+                EID AS employee_id,
+                COUNT(*) AS total_shifts,
+                SUM(TIMESTAMPDIFF(HOUR, Start_Time, End_Time)) AS total_hours,
+                MIN(TIMESTAMPDIFF(HOUR, Start_Time, End_Time)) AS shortest_shift,
+                MAX(TIMESTAMPDIFF(HOUR, Start_Time, End_Time)) AS longest_shift,
+                AVG(TIMESTAMPDIFF(HOUR, Start_Time, End_Time)) AS avg_shift
+            FROM shifts
+            GROUP BY EID
+        """)
+        
+        data = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        
+        return jsonify(data), 200
+    except Exception as e:
+        print(f"Error fetching employee shifts: {e}")
         return jsonify({"error": str(e)}), 500
