@@ -13,8 +13,8 @@ import InventoryPage from "./pages/InventoryPage";
 import StocksPage from "./pages/StocksPage";
 import ReportsPage from "./pages/ReportsPage";   
 
-import Customers from "./customers";
-import Shifts from "./shifts";
+import Customers from "./pages/customers";
+import Shifts from "./pages/shifts";
 
 import Navbar from "./components/Navbar";
 

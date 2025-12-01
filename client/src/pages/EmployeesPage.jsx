@@ -140,7 +140,7 @@ function EmployeesPage() {
 
       {/* Main card */}
       <div style={container}>
-        <h1 style={header}>👩‍🍳 Employee Management 👨‍🍳</h1>
+        <h1 style={header}>Employee Management</h1>
 
         {/* Manager-only Add Employee button */}
         {isManager && !adding && (

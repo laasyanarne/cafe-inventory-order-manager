@@ -43,7 +43,7 @@ function CustomerCountReport() {
 
   return (
     <div className="kpi-card">
-      <h2 className="kpi-title">Total Customer Count</h2>
+      <h2 className="kpi-title">Total Customer Transactions Count</h2>
 
       {loading && <p>Loading…</p>}
       {error && (
@@ -53,7 +53,7 @@ function CustomerCountReport() {
       {!loading && !error && (
         <>
           <div className="kpi-value">{displayValue}</div>
-          <div className="kpi-subtitle">unique customers · all time</div>
+          <div className="kpi-subtitle">unique customers with transactions · all time</div>
         </>
       )}
     </div>

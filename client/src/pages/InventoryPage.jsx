@@ -36,7 +36,7 @@ function InventoryPage() {
   return (
     <div style={pageStyle}>
       <div style={containerStyle}>
-        <h1 style={{ textAlign: "center", color: "#5d4037" }}>🧺 Inventory Management</h1>
+        <h1 style={{ textAlign: "center", color: "#5d4037" }}>Inventory Management</h1>
         <InventoryForm onAdded={refresh} />
         <InventoryList ref={listRef} />
       </div>

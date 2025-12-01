@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Nov 25, 2025 at 11:52 PM
+-- Generation Time: Dec 01, 2025 at 03:37 PM
 -- Server version: 8.0.44
 -- PHP Version: 8.3.26
 
@@ -126,7 +126,18 @@ INSERT INTO `customer` (`CID`, `Name`, `Contact`) VALUES
 (17, 'Charlotte Lewis', 'charlotte@example.com'),
 (18, 'Henry Young', 'henry@example.com'),
 (19, 'Evelyn King', 'evelyn@example.com'),
-(20, 'Jacob Scott', 'jacob@example.com');
+(20, 'Jacob Scott', 'jacob@example.com'),
+(21, 'Nathan Brooks', 'nathan@example.com'),
+(22, 'Zoe Ramirez', 'zoe@example.com'),
+(23, 'Victor Morales', 'victor@example.com'),
+(24, 'Lily Adams', 'lily@example.com'),
+(25, 'Carter Hughes', 'carter@example.com'),
+(26, 'Aria Flores', 'aria@example.com'),
+(27, 'Owen Baker', 'owen@example.com'),
+(28, 'Penelope Reed', 'penelope@example.com'),
+(29, 'Leo Turner', 'leo@example.com'),
+(30, 'Nora Price', 'nora@example.com');
+
 
 -- --------------------------------------------------------
 
@@ -156,7 +167,30 @@ INSERT INTO `employee` (`EID`, `Wages`, `Time_off`, `Employee_since`, `Name`, `m
 (35, 15.00, 5, '2025-11-18', 'Amisha Adepu', 30, 'aadepu@gmail.com'),
 (36, 15.00, 5, '2025-11-18', 'Laasya Narne', 30, 'lnarne@gmail.com'),
 (37, 15.00, 5, '2025-11-18', 'Maitri Pathak', 30, 'mpathak@gmail.com'),
-(38, 15.00, 5, '2025-11-18', 'Dohhyun Oh', 30, 'doh@gmail.com');
+(38, 15.00, 5, '2025-11-18', 'Wesley Jordan', 30, 'wesley.jordan@example.com'),
+(39, 16.00, 5,  '2025-11-19', 'Alex Kim', 30, 'alex.kim@example.com'),
+(40, 16.50, 5,  '2025-11-19', 'Brian Lopez', 30, 'brian.lopez@example.com'),
+(41, 16.00, 5,  '2025-11-19', 'Chloe Ramirez', 30, 'chloe.ramirez@example.com'),
+(42, 16.00, 5,  '2025-11-19', 'Daniel Foster', 30, 'daniel.foster@example.com'),
+(43, 16.00, 5,  '2025-11-19', 'Ella Nguyen', 30, 'ella.nguyen@example.com'),
+(44, 16.00, 5,  '2025-11-19', 'Finn Carter', 30, 'finn.carter@example.com'),
+(45, 16.00, 5,  '2025-11-19', 'Grace Morales', 30, 'grace.morales@example.com'),
+(46, 16.00, 5,  '2025-11-19', 'Hudson Price', 30, 'hudson.price@example.com'),
+(47, 17.00, 7,  '2025-11-19', 'Isla Bennett', 30, 'isla.bennett@example.com'),
+(48, 17.00, 7,  '2025-11-19', 'Jack Rivera', 30, 'jack.rivera@example.com'),
+(49, 17.00, 7,  '2025-11-19', 'Kylie Torres', 30, 'kylie.torres@example.com'),
+(50, 17.00, 7,  '2025-11-19', 'Logan Flores', 30, 'logan.flores@example.com'),
+(51, 18.00, 10, '2025-11-19', 'Mila Bryant', 30, 'mila.bryant@example.com'),
+(52, 18.00, 10, '2025-11-19', 'Noah Wood',  30, 'noah.wood@example.com'),
+(53, 18.00, 10, '2025-11-19', 'Olive Ward', 30, 'olive.ward@example.com'),
+(54, 18.00, 10, '2025-11-19', 'Parker Hill', 30, 'parker.hill@example.com'),
+(55, 18.00, 5,  '2025-11-19', 'Quinn Ross', 30, 'quinn.ross@example.com'),
+(56, 18.00, 5,  '2025-11-19', 'Riley Gray', 30, 'riley.gray@example.com'),
+(57, 18.00, 5,  '2025-11-19', 'Sawyer Stone', 30, 'sawyer.stone@example.com'),
+(58, 18.00, 5,  '2025-11-19', 'Taylor Cole', 30, 'taylor.cole@example.com'),
+(59, 18.00, 5,  '2025-11-19', 'Ulises Vega', 30, 'ulises.vega@example.com'),
+(60, 18.00, 5,  '2025-11-19', 'Vivian Lane', 30, 'vivian.lane@example.com');
+
 
 -- --------------------------------------------------------
 
@@ -297,7 +331,17 @@ INSERT INTO `inventory` (`Inv_ID`, `Temperature`, `Storage_location`) VALUES
 (17, 22.00, 'Spice Rack'),
 (18, 22.00, 'Back Pantry'),
 (19, 0.00, 'Ice Box'),
-(20, 6.00, 'Dairy Fridge');
+(20, 6.00, 'Dairy Fridge'),
+(21, 4.00,   'Fridge D'),
+(22, -18.00, 'Freezer E'),
+(23, 22.00,  'Pantry F'),
+(24, 5.00,   'Walk-in Cooler B'),
+(25, 8.00,   'Dessert Fridge B'),
+(26, 2.00,   'Prep Fridge B'),
+(27, 22.00,  'Back Pantry B'),
+(28, 10.00,  'Beverage Cooler B'),
+(29, 0.00,   'Ice Box B'),
+(30, 6.00,   'Dairy Fridge B');
 
 -- --------------------------------------------------------
 
@@ -394,7 +438,18 @@ INSERT INTO `menu_items` (`M_ID`, `item_name`, `Category`, `Price`) VALUES
 (17, 'Kenafa Cup', 'Dessert', 4.99),
 (18, 'Baklava', 'Dessert', 3.25),
 (19, 'Tiramisu Cup', 'Dessert', 5.95),
-(20, 'Blueberry Muffin', 'Dessert', 3.25);
+(20, 'Blueberry Muffin', 'Dessert', 3.25),
+(21, 'Herbal Tea', 'Hot Drink', 3.25),
+(22, 'Iced Herbal Tea', 'Cold Drink', 3.50),
+(23, 'Vanilla Cold Brew', 'Cold Drink', 4.95),
+(24, 'Seasonal Latte', 'Seasonal',   5.25),
+(25, 'House Salad', 'Food', 7.50),
+(26, 'Grilled Cheese Sandwich', 'Food', 6.25),
+(27, 'Tomato Soup', 'Food', 5.75),
+(28, 'Chocolate Chip Cookie', 'Dessert', 2.50),
+(29, 'Strawberry Cheesecake', 'Dessert', 5.75),
+(30, 'Fruit Cup', 'Dessert', 4.25);
+
 
 -- --------------------------------------------------------
 
@@ -573,7 +628,24 @@ INSERT INTO shifts (EID, Start_Time, End_Time) VALUES
 (37,'07:00:00','15:00:00'),
 (37,'11:00:00','19:00:00'),
 (38,'07:00:00','15:00:00'),
-(38,'12:00:00','20:00:00');
+(38,'12:00:00','20:00:00'),
+(39,'09:00:00','17:00:00'),
+(39,'13:00:00','21:00:00'),
+(40,'08:00:00','16:00:00'),
+(40,'12:00:00','20:00:00'),
+(41,'07:00:00','15:00:00'),
+(41,'11:00:00','19:00:00'),
+(42,'10:00:00','18:00:00'),
+(42,'14:00:00','22:00:00'),
+(43,'09:00:00','17:00:00'),
+(43,'13:00:00','21:00:00'),
+(44,'08:00:00','16:00:00'),
+(44,'12:00:00','20:00:00'),
+(45,'07:00:00','15:00:00'),
+(45,'11:00:00','19:00:00'),
+(46,'10:00:00','18:00:00'),
+(46,'14:00:00','22:00:00');
+
 
 -- --------------------------------------------------------
 
@@ -608,21 +680,30 @@ INSERT INTO `stocks` (EID, Ing_ID) VALUES
 (33,24),
 (34,25),
 (35,28),
-(36,29);
--- --------------------------------------------------------
+(36,29),
+(39, 31),
+(39, 32),
+(40, 33),
+(40, 34),
+(41, 35),
+(41, 36),
+(42, 37),
+(42, 38),
+(43, 39),
+(43, 40);
 
---
+
+
+-- --------------------------------------------------------
 -- Table structure for table `transactions`
---
+-- --------------------------------------------------------
 
 CREATE TABLE `transactions` (
   `txn_id` int NOT NULL,
   `CID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
 -- Dumping data for table `transactions`
---
 
 INSERT INTO `transactions` (`txn_id`, `CID`) VALUES
 (24, NULL),
@@ -652,7 +733,10 @@ INSERT INTO `transactions` (`txn_id`, `CID`) VALUES
 (18, 18),
 (26, 18),
 (19, 19),
-(20, 20);
+(20, 20),
+(29, NULL),
+(30, NULL);
+
 
 -- --------------------------------------------------------
 
@@ -666,9 +750,8 @@ CREATE TABLE `transaction_items` (
   `Quantity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
+
 -- Dumping data for table `transaction_items`
---
 
 INSERT INTO `transaction_items` (`txn_id`, `product_id`, `Quantity`) VALUES
 (1, 1, 1),
@@ -726,7 +809,10 @@ INSERT INTO `transaction_items` (`txn_id`, `product_id`, `Quantity`) VALUES
 (27, 88, 1),
 (28, 29, 1),
 (28, 119, 1),
-(28, 141, 1);
+(28, 141, 1),
+(29, 29, 1),
+(30, 10, 1);
+
 
 -- --------------------------------------------------------
 
@@ -753,11 +839,31 @@ INSERT INTO `user_account` (`EID`, `email`, `password_hash`, `Access_level`) VAL
 (35, 'aadepu@gmail.com', '$2b$12$LftxQE1C.UuZbu5mKFJr0ONlUV9njrqIfp7pLUauEe5ynUzERlANq', 'employee'),
 (36, 'lnarne@gmail.com', '$2b$12$p0BgXCSPq8.BP4KN.QfmVuZ4DbMg36ZQfJ4/6hFLiwDUzCKx5v4Da', 'employee'),
 (37, 'mpathak@gmail.com', '$2b$12$wxzVThEKdPN4kf3xs6j8.Op2q.CvFdxNNwmdE/8BmytJoUAwr.zZq', 'employee'),
-(38, 'doh@gmail.com', '$2b$12$eQ0LrkqzDqm.yRq/o6SQkuRmTKFwRdX.yWWhXcBgELlbPiIAvbIXu', 'employee');
+(38, 'wesley.jordan@example.com', '$2b$12$gDkYx4yNQ423bQ2867CasO17XgxNZ6Wyi5QxxrqP.n1jYz.SiT/eW', 'employee'),
+(39, 'alex.kim@example.com', '$2b$12$wYk1h8Wzn3WrWgFeytGzxeGCAUwtuFz6UQpOGv0yCyywsTYs2It.u', 'employee'),
+(40, 'brian.lopez@example.com', '$2b$12$I4l1tWtwHjrQqIBQHlX3JexB2FHVXxcJxX6E36C93AxmJYfKi5wB2', 'employee'),
+(41, 'chloe.ramirez@example.com', '$2b$12$d2hpEWEvWuXTz0Yol2qFwec4MwzGhdBjyu6n07hB2Bh6q8mM2oxca', 'employee'),
+(42, 'daniel.foster@example.com', '$2b$12$t1bxjA7w/MIzVkZExKarJO8iv3S20mB1dLlv3tBXv4atEq8lvI2T.', 'employee'),
+(43, 'ella.nguyen@example.com', '$2b$12$4D5SVIs1g0IDpwWgVUcm8OgwfaMuZGeirJQWXB/qPjkZfuQvnYI5W', 'employee'),
+(44, 'finn.carter@example.com', '$2b$12$Waw5FsgdY2O6bIYOB2ckrOEg0pG0Rj/iEYA0YbTkvBHgkGbmRB36q', 'employee'),
+(45, 'grace.morales@example.com', '$2b$12$/M39z49Jg21B63TgbmzMyuUlaAWytxdn0jcL/oMNV2Uz1oZXW6BZK', 'employee'),
+(46, 'hudson.price@example.com', '$2b$12$sW8Xb6pGoW7mswaU6oR5EuJzHxbSBth8wk.03ai/vmYhwzI5SG4S.', 'employee'),
+(47, 'isla.bennett@example.com', '$2b$12$igxlxZ0Bm8QpY5/ut7TtR.u7UDArwYOAJqY58j.O.bQ3wjvG5LZaK', 'employee'),
+(48, 'jack.rivera@example.com', '$2b$12$M8LVz22fQDIEcMfM5PfD6OqI/0iTUUQYiIo1V6NnuCBu5tJtNF6cu', 'employee'),
+(49, 'kylie.torres@example.com', '$2b$12$25IEMZvPYGH38nEAC8/xxuHETjyZw5EUrILfwB4GRz8H1DNymK3h.', 'employee'),
+(50, 'logan.flores@example.com', '$2b$12$vD.MBwAcP9uXulhP3IBjC.mqG1qBYFr4d9suruYlf6UuNUTf8a3Gu', 'employee'),
+(51, 'mila.bryant@example.com', '$2b$12$f.ZoUwzcwgBBhJQhz4R3O.RpE47Ck66AQ6begnOlkXxTkUnNPsS1C', 'employee'),
+(52, 'noah.wood@example.com', '$2b$12$JNewtVl1d/MECbkCcYzo.OJ5RvQR37cjWVXwu3.6pYUp97rRmJ5rW', 'employee'),
+(53, 'olive.ward@example.com', '$2b$12$TWA8l5xk0P0utnUyGhP8heOjdC.dUjTc3YqrrI6YIgbHc.IsQLEaG', 'employee'),
+(54, 'parker.hill@example.com', '$2b$12$QPHrRtA3qDzDVGSv3qj7XOIR0XQtAi6aS8ZzIjyvGL1ugB5.Dr6hG', 'employee'),
+(55, 'quinn.ross@example.com', '$2b$12$QsVA7zMWQy8Oln8StO4MgeBS6GN044uzGvpo6eFEt0fCf.XmClooK', 'employee'),
+(56, 'riley.gray@example.com', '$2b$12$O.nmvqq9Fy5QOYej12dqDuUwQTaWsqMCD2W3BOTRO4pAHGXxmE6oO', 'employee'),
+(57, 'sawyer.stone@example.com', '$2b$12$DPV7xM/VrDyAnXj9OnXIg.4CVsFxcl9XioW00JXI63FZGWrblDSJq', 'employee'),
+(58, 'taylor.cole@example.com', '$2b$12$NAqP.XFmEbcQVGoxQMpLXeY0MbCiJMUFmqUfx1s3oqmoDc6YoOnCK', 'employee'),
+(59, 'ulises.vega@example.com', '$2b$12$0YdDEUegUt/DSNPU3RqpgusuRwS3aK8IfMO2fdM2hqAgFcLuKKY4W', 'employee'),
+(60, 'vivian.lane@example.com', '$2b$12$sDPGQ/uh93tYmpJH2ZGbGeLI.rpGGCXZMbDfeTg.SbGbyH5y8lVwC', 'employee');
 
---
--- Indexes for dumped tables
---
+
 
 --
 -- Indexes for table `contains`
@@ -854,9 +960,6 @@ ALTER TABLE `user_account`
 ALTER TABLE `products`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
---
--- Constraints for dumped tables
---
 
 --
 -- Constraints for table `contains`

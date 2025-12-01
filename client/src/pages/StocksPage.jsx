@@ -36,7 +36,7 @@ function StocksPage() {
   return (
     <div style={pageStyle}>
       <div style={containerStyle}>
-        <h1 style={{ textAlign: "center", color: "#5d4037" }}>🗄️ Stocks Overview</h1>
+        <h1 style={{ textAlign: "center", color: "#5d4037" }}>Stocks Overview</h1>
         <StocksForm onAdded={refresh} />
         <StocksList ref={listRef} />
       </div>
