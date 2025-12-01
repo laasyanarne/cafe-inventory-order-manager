@@ -5,6 +5,7 @@ from routes import auth_bp, products_bp, employees_bp, customers_bp, shifts_bp
 from dotenv import load_dotenv
 from routes.inventory import inventory_bp
 from routes.stocks import stocks_bp
+from routes.reports_employee import reports_employee_bp
 
 load_dotenv()
 
@@ -34,6 +35,7 @@ app.register_blueprint(customers_bp, url_prefix="/api/customers")
 app.register_blueprint(shifts_bp, url_prefix="/api/shifts")
 app.register_blueprint(inventory_bp, url_prefix="/api/inventory")
 app.register_blueprint(stocks_bp, url_prefix="/api/stocks")
+app.register_blueprint(reports_employee_bp, url_prefix="/api/reports")
 
 
 if __name__ == "__main__":

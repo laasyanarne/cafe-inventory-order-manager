@@ -22,6 +22,7 @@ function Navbar() {
           <li><Link to="/employees">Employees</Link></li>
           <li><Link to="/inventory">Inventory</Link></li>
           <li><Link to="/stocks">Stocks</Link></li>
+          <li><Link to="/reports/employee">Employee Reports</Link></li>
           <li><button className="logout-btn" onClick={logout}>Logout</button></li>
 
         </ul>
@@ -41,6 +42,7 @@ function Navbar() {
           <li><Link to="/employees" onClick={() => setOpen(false)}>Employees</Link></li>
           <li><Link to="/inventory">Inventory</Link></li>
           <li><Link to="/stocks">Stocks</Link></li>
+          <li><Link to="/reports/employee">Employee Reports</Link></li>
           <li><button className="logout-btn" onClick={logout}>Logout</button></li>
 
         </ul>
