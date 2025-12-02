@@ -3,19 +3,16 @@ import api from "../utils/api";
 
 function TransactionForm({ mode = "create", initialData, onSaved, onCancel }) {
   const isEdit = mode === "edit";
-
-  // use product_id now (not menu_id)
   const [customerId, setCustomerId] = useState("");
   const [items, setItems] = useState([{ product_id: "", qty: 1 }]);
   const [submitting, setSubmitting] = useState(false);
 
-  // When initialData changes (edit vs. new), prefill fields
   useEffect(() => {
     if (initialData) {
       setCustomerId(initialData.customer_id ?? "");
       setItems(
         (initialData.items || []).map((it) => ({
-          // backend now returns product_id
+          // backend returns product_id
           product_id: it.product_id,
           qty: it.qty,
         }))
@@ -47,7 +44,6 @@ function TransactionForm({ mode = "create", initialData, onSaved, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // clean + coerce to numbers, using product_id
     const cleanedItems = items
       .map((r) => ({
         product_id: r.product_id ? Number(r.product_id) : null,

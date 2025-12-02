@@ -2,8 +2,15 @@ import { useState } from "react";
 import api from "../utils/api";
 
 function ProductForm({ onProductAdded }) {
-  const [form, setForm] = useState({ name: "", description: "", price: "", stock: "" });
+  // Track product form fields locally
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    price: "",
+    stock: "",
+  });
 
+  // Submit new product to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -15,7 +22,7 @@ function ProductForm({ onProductAdded }) {
     }
   };
 
-  // 🎨 Form styles
+
   const formRow = {
     display: "flex",
     flexWrap: "wrap",
@@ -24,6 +31,7 @@ function ProductForm({ onProductAdded }) {
     marginBottom: "2rem",
   };
 
+  // styling
   const input = {
     background: "#fff",
     border: "1px solid #e0cfc2",
@@ -37,6 +45,7 @@ function ProductForm({ onProductAdded }) {
     boxSizing: "border-box",
   };
 
+  // submit button style
   const btn = {
     background: "#d4a373",
     border: "none",
@@ -57,12 +66,14 @@ function ProductForm({ onProductAdded }) {
         value={form.name}
         onChange={(e) => setForm({ ...form, name: e.target.value })}
       />
+
       <input
         style={input}
         placeholder="Description"
         value={form.description}
         onChange={(e) => setForm({ ...form, description: e.target.value })}
       />
+
       <input
         style={input}
         type="number"
@@ -70,6 +81,7 @@ function ProductForm({ onProductAdded }) {
         value={form.price}
         onChange={(e) => setForm({ ...form, price: e.target.value })}
       />
+
       <input
         style={input}
         type="number"
@@ -77,12 +89,10 @@ function ProductForm({ onProductAdded }) {
         value={form.stock}
         onChange={(e) => setForm({ ...form, stock: e.target.value })}
       />
+
       <button type="submit" style={btn}>Add Product</button>
     </form>
   );
 }
 
 export default ProductForm;
-
-
-

@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import api from "../utils/api";
 
 function CustomerCountReport() {
+  // track the customer count and loading and error state
   const [count, setCount] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true; 
 
     const fetchCount = async () => {
       try {
@@ -15,7 +16,7 @@ function CustomerCountReport() {
         const res = await api.get("/reports/customer-count");
         if (!isMounted) return;
 
-        // backend returns { customer_count: number | string | null }
+        // API returns customer_count as number, string, or null
         const value = res.data?.customer_count ?? null;
         setCount(value);
         setError("");
@@ -36,10 +37,11 @@ function CustomerCountReport() {
     };
   }, []);
 
+  // format the value to display in KPI card
   const displayValue =
     count == null || isNaN(Number(count))
       ? "—"
-      : Number(count).toLocaleString('en-US');
+      : Number(count).toLocaleString("en-US");
 
   return (
     <div className="kpi-card">
@@ -53,7 +55,9 @@ function CustomerCountReport() {
       {!loading && !error && (
         <>
           <div className="kpi-value">{displayValue}</div>
-          <div className="kpi-subtitle">unique customers with transactions · all time</div>
+          <div className="kpi-subtitle">
+            unique customers with transactions · all time
+          </div>
         </>
       )}
     </div>

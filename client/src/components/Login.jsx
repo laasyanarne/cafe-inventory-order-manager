@@ -6,6 +6,7 @@ function Login({ onToggle }) {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
+  // Handle login form submission and call the auth helper
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -18,7 +19,7 @@ function Login({ onToggle }) {
     }
   };
 
-  // 🎨 Background style
+  // Main background wrapper for the login screen
   const page = {
     minHeight: "100vh",
     width: "100vw",
@@ -31,7 +32,7 @@ function Login({ onToggle }) {
     boxSizing: "border-box",
   };
 
-  // 🎨 Login card
+  // Card container that holds the login form content
   const card = {
     width: "100%",
     maxWidth: "420px",
@@ -49,6 +50,7 @@ function Login({ onToggle }) {
     marginBottom: "1.5rem",
   };
 
+  //  styling for text inputs
   const input = {
     width: "100%",
     padding: "0.75rem 1rem",
@@ -97,6 +99,7 @@ function Login({ onToggle }) {
       <div style={card}>
         <h1 style={title}>Halwa Cafe Login</h1>
 
+        {/* email and password login form */}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -125,6 +128,7 @@ function Login({ onToggle }) {
           </button>
         </form>
 
+        {/* signup view if the user does not have an account yet */}
         <p style={{ marginTop: "1rem", fontSize: "0.95rem" }}>
           Don't have an account?
           <button onClick={onToggle} style={linkButton}>

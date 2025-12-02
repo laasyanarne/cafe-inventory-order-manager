@@ -1,7 +1,7 @@
-/* Full-page gradient background, like Products page */
+/* Full-page gradient background */
 .employees-page {
   min-height: 100vh;
-  width: 100vw; /* <-- important: take whole screen width */
+  width: 100vw; 
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -13,7 +13,7 @@
 /* Main white card in the center */
 .employees-card {
   width: 100%;
-  max-width: 1200px; /* same visual width as inventory card */
+  max-width: 1200px; 
   background: #fff7f0;
   border-radius: 24px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
@@ -79,7 +79,6 @@
   color: #4b2b24;
 }
 
-/* OPTIONAL: if your EmployeeList renders simple rows, you can style them like cards */
 .employee-row {
   display: flex;
   justify-content: space-between;

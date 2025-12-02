@@ -15,7 +15,7 @@ function TotalRevenueReport() {
         const res = await api.get("/reports/total-revenue");
         if (!isMounted) return;
 
-        // backend returns { total_revenue: number | string | null }
+        // backend returns total revenue
         const value = res.data?.total_revenue ?? null;
         setRevenue(value);
         setError("");

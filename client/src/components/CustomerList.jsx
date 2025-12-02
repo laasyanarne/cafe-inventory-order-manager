@@ -7,9 +7,10 @@ function CustomerList() {
   const [form, setForm] = useState({ name: "", contact: "" });
 
   useEffect(() => {
-    loadCustomers();
+    loadCustomers(); 
   }, []);
 
+  // retreive all customers from the API
   const loadCustomers = async () => {
     try {
       const res = await api.get("/customers");
@@ -22,8 +23,10 @@ function CustomerList() {
     }
   };
 
+  // add a new customer using the form
   const handleAdd = async (e) => {
     e.preventDefault();
+
     if (!form.name.trim()) {
       alert("Name is required");
       return;
@@ -32,17 +35,19 @@ function CustomerList() {
     try {
       await api.post("/customers", form);
       setForm({ name: "", contact: "" });
-      loadCustomers();
+      loadCustomers(); 
     } catch (err) {
       alert(err.response?.data?.error || "Failed to add customer");
     }
   };
 
+  // delete a customer by id
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this customer?")) return;
+
     try {
       await api.delete(`/customers/${id}`);
-      loadCustomers();
+      loadCustomers(); 
     } catch (err) {
       alert(err.response?.data?.error || "Failed to delete customer");
     }
@@ -55,8 +60,17 @@ function CustomerList() {
   return (
     <div style={{ marginTop: "2rem" }}>
       <h2>Customers</h2>
-      
-      <form onSubmit={handleAdd} style={{ marginBottom: "1rem", display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+
+      {/* add-customer form */}
+      <form
+        onSubmit={handleAdd}
+        style={{
+          marginBottom: "1rem",
+          display: "flex",
+          gap: "0.5rem",
+          flexWrap: "wrap",
+        }}
+      >
         <input
           placeholder="Name *"
           value={form.name}
@@ -64,17 +78,20 @@ function CustomerList() {
           required
           style={{ padding: "0.5rem" }}
         />
+
         <input
           placeholder="Contact (email/phone)"
           value={form.contact}
           onChange={(e) => setForm({ ...form, contact: e.target.value })}
           style={{ padding: "0.5rem" }}
         />
+
         <button type="submit" style={{ padding: "0.5rem 1rem" }}>
           Add Customer
         </button>
       </form>
 
+      {/* list of customers */}
       <ul style={{ listStyle: "none", padding: 0 }}>
         {customers.map((customer) => (
           <li
@@ -93,6 +110,7 @@ function CustomerList() {
               <strong>{customer.name}</strong>
               {customer.contact && <span> — {customer.contact}</span>}
             </div>
+
             <button
               onClick={() => handleDelete(customer.id)}
               style={{
@@ -114,4 +132,3 @@ function CustomerList() {
 }
 
 export default CustomerList;
-

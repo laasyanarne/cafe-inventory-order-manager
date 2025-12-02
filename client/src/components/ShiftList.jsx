@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import api from "../utils/api";
 
 function ShiftList() {
+  // Track all shifts, employees, loading state, and the small add-shift form
   const [shifts, setShifts] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ employee_id: "", start_time: "", end_time: "" });
 
   useEffect(() => {
+    // Get both shifts and employees so the dropdown has names
     loadShifts();
     loadEmployees();
   }, []);
@@ -35,6 +37,8 @@ function ShiftList() {
 
   const handleAdd = async (e) => {
     e.preventDefault();
+
+    // check for incomplete shift data
     if (!form.employee_id || !form.start_time || !form.end_time) {
       alert("All fields are required");
       return;
@@ -51,8 +55,8 @@ function ShiftList() {
 
   const handleDelete = async (employeeId, startTime, endTime) => {
     if (!window.confirm("Delete this shift?")) return;
+
     try {
-      // URL encode the times
       const encodedStart = encodeURIComponent(startTime);
       const encodedEnd = encodeURIComponent(endTime);
       await api.delete(`/shifts/${employeeId}/${encodedStart}/${encodedEnd}`);
@@ -70,7 +74,17 @@ function ShiftList() {
     <div style={{ marginTop: "2rem" }}>
       <h2>Shifts</h2>
       
-      <form onSubmit={handleAdd} style={{ marginBottom: "1rem", display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
+      {/* form to add a new shift for any employee */}
+      <form
+        onSubmit={handleAdd}
+        style={{
+          marginBottom: "1rem",
+          display: "flex",
+          gap: "0.5rem",
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
         <select
           value={form.employee_id}
           onChange={(e) => setForm({ ...form, employee_id: e.target.value })}
@@ -105,6 +119,7 @@ function ShiftList() {
         </button>
       </form>
 
+      {/* Simple list of existing shifts with a delete functionalith */}
       <div style={{ display: "grid", gap: "0.5rem" }}>
         {shifts.map((shift, index) => (
           <div
@@ -124,7 +139,9 @@ function ShiftList() {
               {shift.start_time} - {shift.end_time}
             </div>
             <button
-              onClick={() => handleDelete(shift.employee_id, shift.start_time, shift.end_time)}
+              onClick={() =>
+                handleDelete(shift.employee_id, shift.start_time, shift.end_time)
+              }
               style={{
                 padding: "0.25rem 0.5rem",
                 backgroundColor: "#e57373",
@@ -144,4 +161,3 @@ function ShiftList() {
 }
 
 export default ShiftList;
-

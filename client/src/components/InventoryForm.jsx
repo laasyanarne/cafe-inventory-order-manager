@@ -2,12 +2,15 @@ import { useState } from "react";
 import api from "../utils/api";
 
 function InventoryForm({ onAdded }) {
+  //temperature and location values for the new inventory record
   const [form, setForm] = useState({ temperature: "", location: "" });
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await api.post("/inventory", form);
+      // Clear the form after saved
       setForm({ temperature: "", location: "" });
       if (onAdded) onAdded();
     } catch (err) {
@@ -15,6 +18,7 @@ function InventoryForm({ onAdded }) {
     }
   };
 
+  // styling
   const row = { display: "flex", gap: "12px", justifyContent: "center", marginBottom: "2rem" };
   const input = {
     background: "#fff",
@@ -53,7 +57,9 @@ function InventoryForm({ onAdded }) {
         value={form.location}
         onChange={(e) => setForm({ ...form, location: e.target.value })}
       />
-      <button type="submit" style={btn}>Add Inventory</button>
+      <button type="submit" style={btn}>
+        Add Inventory
+      </button>
     </form>
   );
 }

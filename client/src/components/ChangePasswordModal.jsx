@@ -2,10 +2,12 @@ import { useState } from "react";
 import api from "../utils/api";
 
 export default function ChangePasswordModal({ onClose }) {
+  // form fields for password update
   const [oldPw, setOldPw] = useState("");
   const [newPw, setNewPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
 
+  // handle password update request
   const submit = async (e) => {
     e.preventDefault();
 
@@ -21,7 +23,7 @@ export default function ChangePasswordModal({ onClose }) {
       });
 
       alert("Password updated!");
-      onClose();
+      onClose(); 
     } catch (err) {
       alert(err.response?.data?.error || "Failed to update password");
     }
@@ -29,6 +31,7 @@ export default function ChangePasswordModal({ onClose }) {
 
   return (
     <div
+      // simple fullscreen overlay 
       style={{
         position: "fixed",
         top: 0,
@@ -43,6 +46,7 @@ export default function ChangePasswordModal({ onClose }) {
       }}
     >
       <div
+        // modal container styling
         style={{
           background: "#fff",
           padding: "2rem",
@@ -54,7 +58,7 @@ export default function ChangePasswordModal({ onClose }) {
         <h2 style={{ marginBottom: "1rem" }}>Change Password</h2>
 
         <form onSubmit={submit}>
-
+          {/* password inputs */}
           <input
             type="password"
             placeholder="Current Password"
@@ -82,6 +86,7 @@ export default function ChangePasswordModal({ onClose }) {
             style={inputStyle}
           />
 
+          {/* action buttons */}
           <div style={{ marginTop: "1rem" }}>
             <button
               type="submit"
@@ -117,6 +122,7 @@ export default function ChangePasswordModal({ onClose }) {
   );
 }
 
+// styling for the three inputs
 const inputStyle = {
   width: "100%",
   marginBottom: "0.6rem",

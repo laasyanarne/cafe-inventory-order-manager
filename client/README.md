@@ -1,16 +1,54 @@
-# React + Vite
+# Cafe Inventory & Order Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+We created a database/system that supports internal business operations for a local Blacksburg coffee shop, Halwa. 
+The system will is designed to manage key processes such as order and menu management, employee and customer 
+management, ingredient inventory, low-stock alerts, sales analytics, and more.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Auth
+  - Employee signup / login
+  - Manager vs employee roles
+  - Change-password flow
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Menu & Products
+  - Create, edit, and delete products
+  - Track price and stock
 
-## Expanding the ESLint configuration
+- Ingredients & Inventory
+  - Manage ingredients list
+  - Inventory cards with temperature + storage location
+  - Edit / delete inventory entries
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Stocks
+  - Associate employees with ingredients they handle
+  - Edit / delete stock records
+
+- Employees & Shifts
+  - Employee management (add, edit, promote/demote, delete)
+  - Shift scheduling with start/end times
+  - Employee shift summary table + chart
+
+- Customers & Transactions
+  - Simple customer list
+  - Transaction history with line items
+  - Metrics like total revenue and average transaction value
+
+- Reports
+  - Employee shift analytics
+  - Revenue and pricing KPIs
+  - Customer transaction count
+
+---
+
+## Tech Stack
+
+- Frontend: React + Vite
+- Styling: Plain CSS + inline styles
+- Backend: Node.js / Express
+- Database: MySQL
+- Other: Axios-style API helper, Recharts
+
+

@@ -1,10 +1,10 @@
-// src/components/IngredientList.jsx
 import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import api from "../utils/api";
 
 const IngredientList = forwardRef((props, ref) => {
   const [ingredients, setIngredients] = useState([]);
 
+  // Get all ingredients from the backend
   const loadIngredients = async () => {
     try {
       const res = await api.get("/ingredients");
@@ -86,7 +86,6 @@ const IngredientList = forwardRef((props, ref) => {
   );
 });
 
-
 function IngredientCard({ ingredient, onDelete, onSave }) {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(ingredient.name);
@@ -128,6 +127,7 @@ function IngredientCard({ ingredient, onDelete, onSave }) {
     minWidth: "140px",
   };
 
+  // Button base
   const btnBase = {
     border: "none",
     borderRadius: "999px",

@@ -4,6 +4,7 @@ import api from "../utils/api";
 function IngredientForm({ onIngredientAdded }) {
   const [form, setForm] = useState({ name: "" });
 
+  // handle submit for adding a new ingredient
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name.trim()) {
@@ -13,12 +14,13 @@ function IngredientForm({ onIngredientAdded }) {
 
     try {
       await api.post("/ingredients", { name: form.name });
-      setForm({ name: "" });
-      if (onIngredientAdded) onIngredientAdded();
+      setForm({ name: "" }); 
+      if (onIngredientAdded) onIngredientAdded(); 
     } catch (err) {
       alert(err.response?.data?.error || "Failed to add ingredient");
     }
   };
+
 
   const formRow = {
     display: "flex",

@@ -65,7 +65,7 @@
   align-items: stretch;
 }
 
-/* -------- Generic report card (used by TopProductsReport) -------- */
+/* -------- Generic report card -------- */
 
 .report-card {
   background: #ffffff;
@@ -130,7 +130,7 @@
   color: #4b2b24;
 }
 
-/* -------- KPI card (All metric cards) -------- */
+/* -------- KPI card -------- */
 
 .kpi-card {
   display: flex;
@@ -237,7 +237,7 @@
   border-bottom: none;
 }
 
-/* -------- Responsive tweaks -------- */
+/* -------- styling -------- */
 
 @media (max-width: 1024px) {
   .kpi-row {

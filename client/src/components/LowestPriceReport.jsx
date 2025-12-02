@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../utils/api";
 
 function LowestPriceReport() {
+  // Track the lowest price result and basic loading and error state
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -9,13 +10,14 @@ function LowestPriceReport() {
   useEffect(() => {
     let isMounted = true;
 
+    // Get the lowest priced product 
     const fetchLowestPrice = async () => {
       try {
         setLoading(true);
         const res = await api.get("/reports/lowest-price");
         if (!isMounted) return;
 
-        // backend returns { lowest_price: number, product_name: string }
+        // Backend responds with lowest_price and product_name fields
         setData(res.data);
         setError("");
       } catch (err) {
@@ -35,6 +37,7 @@ function LowestPriceReport() {
     };
   }, []);
 
+  //  format the price for display
   const displayPrice =
     data?.lowest_price == null || isNaN(Number(data.lowest_price))
       ? "—"

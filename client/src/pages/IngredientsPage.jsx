@@ -1,30 +1,26 @@
 import { useRef } from "react";
-import IngredientForm from "../components/IngredientForm";
-import IngredientList from "../components/IngredientsList";
-import "./IngredientsPage.css";
+import { useAuth } from "../context/AuthContext";
+import InventoryForm from "../components/InventoryForm";
+import InventoryList from "../components/InventoryList";
+import "./InventoryPage.css";
 
-function IngredientsPage() {
-  const listRef = useRef(null);
+function InventoryPage() {
+  const { user } = useAuth();
+  const listRef = useRef();
 
-  const handleRefresh = () => {
-    if (listRef.current && listRef.current.refresh) {
-      listRef.current.refresh();
-    }
-  };
+  const refresh = () => listRef.current?.refresh();
 
   return (
-    <div className="ingredients-page">
-      <div className="ingredients-card">
-        <header className="ingredients-header">
-          <h1 className="ingredients-title">Ingredient Management</h1>
-        </header>
-
-        {/* form + list live inside the card */}
-        <IngredientForm onIngredientAdded={handleRefresh} />
-        <IngredientList ref={listRef} />
+    <div className="inventory-page">
+      <div className="inventory-card">
+        <h1 className="inventory-title">Inventory Management</h1>
+        <InventoryForm onAdded={refresh} />
+        <div className="inventory-content">
+          <InventoryList ref={listRef} />
+        </div>
       </div>
     </div>
   );
 }
 
-export default IngredientsPage;
+export default InventoryPage;

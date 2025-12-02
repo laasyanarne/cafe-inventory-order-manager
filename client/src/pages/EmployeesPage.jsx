@@ -30,7 +30,7 @@ function EmployeesPage() {
     }
   };
 
-  //  Page container (same vibe as ProductsPage)
+  //  Page container 
   const page = {
     minHeight: "100vh",
     width: "100vw",

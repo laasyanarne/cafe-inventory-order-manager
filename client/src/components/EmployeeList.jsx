@@ -4,10 +4,14 @@ import { useAuth } from "../context/AuthContext";
 import ChangePasswordModal from "./ChangePasswordModal";
 
 function EmployeeList() {
+  // pull the logged in user so we know their role and id
   const { user } = useAuth();
+
+  // full list of employees shown on the page
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // simple edit state for inline editing of one employee at a time
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({
     name: "",
@@ -16,12 +20,14 @@ function EmployeeList() {
     time_off: "",
   });
 
+  // controls the change password modal for the current user
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
   useEffect(() => {
     loadEmployees();
   }, []);
 
+  // get the latest employees from the backend
   const loadEmployees = async () => {
     try {
       const res = await api.get("/employees");
@@ -33,6 +39,7 @@ function EmployeeList() {
     }
   };
 
+  // manager can promote an employee to manager
   const handlePromote = async (employeeId) => {
     if (!window.confirm("Promote this employee to manager?")) return;
 
@@ -44,6 +51,7 @@ function EmployeeList() {
     }
   };
 
+  // manager can demote a manager back to employee
   const handleDemote = async (employeeId) => {
     if (!window.confirm("Demote this manager back to employee?")) return;
 
@@ -55,6 +63,7 @@ function EmployeeList() {
     }
   };
 
+  // delete an employee record 
   const handleDelete = async (employeeId) => {
     if (!window.confirm("Delete this employee? This cannot be undone.")) return;
 
@@ -66,6 +75,7 @@ function EmployeeList() {
     }
   };
 
+  // enter edit mode with the selected employee's current values
   const startEdit = (emp) => {
     setEditingId(emp.id);
     setEditForm({
@@ -76,11 +86,13 @@ function EmployeeList() {
     });
   };
 
+  // leave edit mode and clear the form
   const cancelEdit = () => {
     setEditingId(null);
     setEditForm({ name: "", email: "", wages: "", time_off: "" });
   };
 
+  // submit updated employee info to the backend
   const submitEdit = async (e) => {
     e.preventDefault();
 
@@ -102,7 +114,7 @@ function EmployeeList() {
 
   const isManager = user?.role === "manager";
 
-  // Style objects reused below
+  // shared style objects for the employee cards and text
   const card = {
     background: "#fff",
     border: "1px solid #f1dfcf",
@@ -152,7 +164,6 @@ function EmployeeList() {
       {employees.map((emp) => (
         <div style={card} key={emp.id}>
           {editingId === emp.id ? (
-            // EDIT MODE
             <form
               style={{ width: "100%", display: "flex", flexDirection: "column" }}
               onSubmit={submitEdit}
@@ -212,7 +223,6 @@ function EmployeeList() {
               </div>
             </form>
           ) : (
-            // NORMAL VIEW
             <>
               <div style={info}>
                 <span style={nameStyle}>{emp.name}</span>
@@ -221,7 +231,7 @@ function EmployeeList() {
               </div>
 
               <div>
-                {/* Promote (manager only) */}
+                {/* Promote button for managers, only on employees */}
                 {isManager && emp.role === "employee" && (
                   <button
                     style={{ ...btn, background: "#64b5f6", color: "#fff" }}
@@ -231,7 +241,7 @@ function EmployeeList() {
                   </button>
                 )}
 
-                {/* Demote (manager only, not self) */}
+                {/* Demote button for managers, not on their own account */}
                 {isManager && emp.role === "manager" && emp.id !== user.id && (
                   <button
                     style={{ ...btn, background: "#ba68c8", color: "#fff" }}
@@ -241,7 +251,7 @@ function EmployeeList() {
                   </button>
                 )}
 
-                {/* Edit (manager only) */}
+                {/* Edit details for any employee, manager only */}
                 {isManager && (
                   <button
                     style={{ ...btn, background: "#ffb74d", color: "#fff" }}
@@ -251,7 +261,7 @@ function EmployeeList() {
                   </button>
                 )}
 
-                {/* Delete (manager only, NOT yourself) */}
+                {/* Delete other employees, but never yourself */}
                 {isManager && emp.id !== user.id && (
                   <button
                     style={{ ...btn, background: "#e57373", color: "#fff" }}
@@ -261,7 +271,7 @@ function EmployeeList() {
                   </button>
                 )}
 
-                {/* 🔐 Everyone can change their own password */}
+                {/* each user can open a password change modal for their own account */}
                 {emp.id === user.id && (
                   <button
                     style={{ ...btn, background: "#9575cd", color: "#fff" }}

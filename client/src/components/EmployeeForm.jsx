@@ -1,13 +1,15 @@
-import { useState } from "react"; 
+import { useState } from "react";
 import api from "../utils/api";
 
 function EmployeeForm({ onClose, onAdded }) {
+  // form fields for creating a new employee
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [wages, setWages] = useState("");
   const [timeOff, setTimeOff] = useState("");
 
+  // send the new employee data to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,8 +23,8 @@ function EmployeeForm({ onClose, onAdded }) {
       });
 
       alert("Employee added successfully!");
-      onAdded();
-      onClose();
+      onAdded(); 
+      onClose(); 
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.error || "Failed to add employee");
@@ -31,7 +33,7 @@ function EmployeeForm({ onClose, onAdded }) {
 
   return (
     <form onSubmit={handleSubmit} className="employee-form">
-      
+      {/* basic text inputs for employee details */}
       <input
         type="text"
         placeholder="Full Name"
@@ -73,9 +75,11 @@ function EmployeeForm({ onClose, onAdded }) {
         required
       />
 
+      {/* action buttons */}
       <button type="submit">Add</button>
-      <button type="button" onClick={onClose}>Cancel</button>
-
+      <button type="button" onClick={onClose}>
+        Cancel
+      </button>
     </form>
   );
 }

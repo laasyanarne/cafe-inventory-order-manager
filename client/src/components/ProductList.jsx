@@ -1,9 +1,11 @@
 import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import api from "../utils/api";
 
+// Product list 
 const ProductList = forwardRef((props, ref) => {
   const [products, setProducts] = useState([]);
 
+  // Load all products from the backend
   const loadProducts = async () => {
     try {
       const res = await api.get("/products");
@@ -37,6 +39,7 @@ const ProductList = forwardRef((props, ref) => {
     boxSizing: "border-box",
   };
 
+  // Remove a product from the page
   const deleteProduct = async (id) => {
     if (!confirm("Delete this product?")) return;
     try {
@@ -47,6 +50,7 @@ const ProductList = forwardRef((props, ref) => {
     }
   };
 
+  // Save edits for an existing product
   const updateProduct = async (id, updatedData) => {
     try {
       await api.put(`/products/${id}`, updatedData);
@@ -79,7 +83,7 @@ const ProductList = forwardRef((props, ref) => {
   );
 });
 
-// 🧁 Expandable Product Card (NOW WITH EDIT MODE)
+// Expandable product card with edit functionality
 function ProductCard({ product, onDelete, onSave }) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -186,24 +190,31 @@ function ProductCard({ product, onDelete, onSave }) {
             <input
               style={input}
               value={editData.name}
-              onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+              onChange={(e) =>
+                setEditData({ ...editData, name: e.target.value })
+              }
             />
             <input
               style={input}
               value={editData.price}
               type="number"
-              onChange={(e) => setEditData({ ...editData, price: e.target.value })}
+              onChange={(e) =>
+                setEditData({ ...editData, price: e.target.value })
+              }
             />
             <input
               style={input}
               value={editData.stock}
               type="number"
-              onChange={(e) => setEditData({ ...editData, stock: e.target.value })}
+              onChange={(e) =>
+                setEditData({ ...editData, stock: e.target.value })
+              }
             />
           </div>
         ) : (
           <div>
-            <strong>{product.name}</strong> — ${product.price} ({product.stock} in stock)
+            <strong>{product.name}</strong> — ${product.price} (
+            {product.stock} in stock)
           </div>
         )}
 

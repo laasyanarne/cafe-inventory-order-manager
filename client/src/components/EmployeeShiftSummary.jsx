@@ -37,20 +37,27 @@ function EmployeeShiftSummary() {
       }
     };
 
+
     fetchData();
     return () => {
       isMounted = false;
     };
   }, []);
 
-  if (loading) return <p style={{ textAlign: "center", color: "#7b4b32" }}>Loading...</p>;
-  if (error) return <p style={{ color: "#c62828", fontSize: "0.9rem", textAlign: "center" }}>{error}</p>;
+  if (loading)
+    return <p style={{ textAlign: "center", color: "#7b4b32" }}>Loading...</p>;
+  if (error)
+    return (
+      <p style={{ color: "#c62828", fontSize: "0.9rem", textAlign: "center" }}>
+        {error}
+      </p>
+    );
 
   return (
     <div className="employee-report-section">
       <h3 className="employee-report-title">Employee Shift Summary</h3>
-      
-      {/* Table */}
+
+      {/* table view of the summary metrics for each employee */}
       <div className="employee-table-wrapper">
         <table className="employee-table">
           <thead>
@@ -78,24 +85,24 @@ function EmployeeShiftSummary() {
         </table>
       </div>
 
-      {/* Chart */}
+      {/* visual summary of average and total hours per employee */}
       <h4 className="chart-subtitle">Average Shift Length (Hours)</h4>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart 
-          data={reports} 
+        <BarChart
+          data={reports}
           margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#f0ddd0" />
-          <XAxis 
-            dataKey="employee_id" 
+          <XAxis
+            dataKey="employee_id"
             label={{ value: "Employee ID", position: "insideBottom", dy: 10 }}
             stroke="#7b4b32"
           />
-          <YAxis 
+          <YAxis
             label={{ value: "Hours", angle: -90, position: "insideLeft" }}
             stroke="#7b4b32"
           />
-          <Tooltip 
+          <Tooltip
             contentStyle={{
               backgroundColor: "#fff7f0",
               border: "1px solid #f0ddd0",

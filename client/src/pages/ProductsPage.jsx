@@ -11,7 +11,7 @@ function ProductsPage() {
     productListRef.current?.refresh();
   };
 
-  // 🎨 Full page styled container
+  // styled page
   const page = {
     minHeight: "100vh",
     width: "100vw",
