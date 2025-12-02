@@ -60,6 +60,30 @@
   box-sizing: border-box;
 }
 
+/* New transaction button */
+.transactions-new-btn {
+  padding: 0.55rem 1.4rem;
+  background: #d89b63;
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+}
+
+.transactions-new-btn:hover {
+  background: #e1a873;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+}
+
+.transactions-new-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
 /* Transaction card */
 .transaction-card {
   background: #ffffff;
@@ -141,27 +165,4 @@
     align-items: flex-start;
     gap: 0.25rem;
   }
-  .transactions-new-btn {
-  padding: 0.55rem 1.4rem;
-  background: #d89b63;
-  border: none;
-  border-radius: 999px;
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
-  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
-}
-
-.transactions-new-btn:hover {
-  background: #e1a873;
-  transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
-}
-
-.transactions-new-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-}
-
 }
