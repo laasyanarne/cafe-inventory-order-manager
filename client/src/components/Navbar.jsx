@@ -9,6 +9,8 @@ function Navbar() {
 
   const toggleMenu = () => setOpen((prev) => !prev);
 
+  const closeMenu = () => setOpen(false);
+
   return (
     <nav className="nav-container">
       <div className="nav-left">
@@ -31,7 +33,7 @@ function Navbar() {
             <Link to="/transactions">Transactions</Link>
           </li>
           <li>
-            <Link to="/reports">Reports</Link> 
+            <Link to="/reports">Reports</Link>
           </li>
           <li>
             <Link to="/customers">Customers</Link>
@@ -64,47 +66,47 @@ function Navbar() {
       {open && (
         <ul className="mobile-menu">
           <li>
-            <Link to="/products" onClick={() => setOpen(false)}>
+            <Link to="/products" onClick={closeMenu}>
               Menu
             </Link>
           </li>
           <li>
-            <Link to="/employees" onClick={() => setOpen(false)}>
+            <Link to="/employees" onClick={closeMenu}>
               Employees
             </Link>
           </li>
           <li>
-            <Link to="/ingredients" onClick={() => setOpen(false)}>
+            <Link to="/ingredients" onClick={closeMenu}>
               Ingredients
             </Link>
           </li>
           <li>
-            <Link to="/transactions" onClick={() => setOpen(false)}>
+            <Link to="/transactions" onClick={closeMenu}>
               Transactions
             </Link>
           </li>
           <li>
-            <Link to="/reports" onClick={() => setOpen(false)}>
+            <Link to="/reports" onClick={closeMenu}>
               Reports
-            </Link> 
+            </Link>
           </li>
           <li>
-            <Link to="/customers" onClick={() => setOpen(false)}>
+            <Link to="/customers" onClick={closeMenu}>
               Customers
             </Link>
           </li>
           <li>
-            <Link to="/shifts" onClick={() => setOpen(false)}>
+            <Link to="/shifts" onClick={closeMenu}>
               Shifts
             </Link>
           </li>
           <li>
-            <Link to="/inventory" onClick={() => setOpen(false)}>
+            <Link to="/inventory" onClick={closeMenu}>
               Inventory
             </Link>
           </li>
           <li>
-            <Link to="/stocks" onClick={() => setOpen(false)}>
+            <Link to="/stocks" onClick={closeMenu}>
               Stocks
             </Link>
           </li>
