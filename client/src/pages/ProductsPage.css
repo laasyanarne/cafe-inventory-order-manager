@@ -1,0 +1,25 @@
+/* ProductsPage.css — semantic helpers only; layout uses shared.css primitives */
+
+.menu-name {
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.menu-desc {
+  max-width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+.menu-price {
+  font-weight: 600;
+  color: var(--brand);
+}
+
+@media (max-width: 640px) {
+  .menu-th-desc,
+  .menu-td-desc { display: none; }
+}

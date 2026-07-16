@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from db import get_connection
-from middleware import token_required
+from middleware import token_required, manager_required
 from datetime import datetime, timedelta
 
 shifts_bp = Blueprint('shifts', __name__)
@@ -23,7 +23,8 @@ def time_to_string(time_obj):
 
 # GET all shifts
 @shifts_bp.route("", methods=["GET"])
-def get_shifts():
+@token_required
+def get_shifts(current_user_id):
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -48,12 +49,11 @@ def get_shifts():
         
         return jsonify(shift_list), 200
     except Exception as e:
-        print(f"Error fetching shifts: {e}")
         return jsonify({'error': str(e)}), 500
 
 # CREATE shift
 @shifts_bp.route("", methods=["POST"])
-@token_required
+@manager_required
 def create_shift(current_user_id):
     try:
         data = request.get_json()
@@ -91,12 +91,11 @@ def create_shift(current_user_id):
         
         return jsonify({'message': 'Shift created successfully'}), 201
     except Exception as e:
-        print(f"Error creating shift: {e}")
         return jsonify({'error': str(e)}), 500
 
 # UPDATE shift
 @shifts_bp.route("/<int:eid>", methods=["PUT"])
-@token_required
+@manager_required
 def update_shift(current_user_id, eid):
     try:
         data = request.get_json()
@@ -133,12 +132,11 @@ def update_shift(current_user_id, eid):
         
         return jsonify({'message': 'Shift updated successfully'}), 200
     except Exception as e:
-        print(f"Error updating shift: {e}")
         return jsonify({'error': str(e)}), 500
 
 # DELETE shift
 @shifts_bp.route("/<int:eid>/<start_time>", methods=["DELETE"])
-@token_required
+@manager_required
 def delete_shift(current_user_id, eid, start_time):
     try:
         conn = get_connection()
@@ -159,12 +157,12 @@ def delete_shift(current_user_id, eid, start_time):
         
         return jsonify({'message': 'Shift deleted successfully'}), 200
     except Exception as e:
-        print(f"Error deleting shift: {e}")
         return jsonify({'error': str(e)}), 500
 
 # GET all employees for dropdown
 @shifts_bp.route("/employees", methods=["GET"])
-def get_employees_for_shifts():
+@token_required
+def get_employees_for_shifts(current_user_id):
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -182,5 +180,4 @@ def get_employees_for_shifts():
         
         return jsonify(employee_list), 200
     except Exception as e:
-        print(f"Error fetching employees: {e}")
         return jsonify({'error': str(e)}), 500

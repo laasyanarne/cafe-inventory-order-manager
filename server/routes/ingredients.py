@@ -1,11 +1,12 @@
 from flask import Blueprint, jsonify, request
 from db import get_connection
-from middleware import token_required
+from middleware import token_required, manager_required
 
 ingredients_bp = Blueprint("ingredients", __name__)
 
 @ingredients_bp.route("", methods=["GET"])
-def get_ingredients():
+@token_required
+def get_ingredients(current_user_id):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -24,7 +25,7 @@ def get_ingredients():
 
 
 @ingredients_bp.route("", methods=["POST"])
-@token_required
+@manager_required
 def add_ingredient(current_user_id):
     data = request.get_json() or {}
     name = data.get("name")
@@ -53,7 +54,7 @@ def add_ingredient(current_user_id):
 
 
 @ingredients_bp.route("/<int:ing_id>", methods=["PUT"])
-@token_required
+@manager_required
 def update_ingredient(current_user_id, ing_id):
     data = request.get_json() or {}
     name = data.get("name")
@@ -81,7 +82,7 @@ def update_ingredient(current_user_id, ing_id):
 
 
 @ingredients_bp.route("/<int:ing_id>", methods=["DELETE"])
-@token_required
+@manager_required
 def delete_ingredient(current_user_id, ing_id):
     conn = get_connection()
     cursor = conn.cursor()

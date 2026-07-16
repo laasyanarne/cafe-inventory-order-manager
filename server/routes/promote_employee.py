@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from db import get_connection
-from middleware import token_required, manager_required
+from middleware import token_required, manager_required, get_role
 import bcrypt
 
 employees_bp = Blueprint("employees", __name__)
@@ -31,6 +31,12 @@ def get_employees(current_user_id):
 
     cursor.close()
     conn.close()
+
+    if get_role(current_user_id) != 'manager':
+        for emp in employees:
+            emp.pop('Wages', None)
+            emp.pop('Time_off', None)
+
     return jsonify(employees), 200
 
 
@@ -146,7 +152,6 @@ def add_employee(current_user_id):
 
     except Exception as e:
         conn.rollback()
-        print("\nADD EMPLOYEE ERROR:", str(e))
         return jsonify({"error": "Database error", "details": str(e)}), 500
 
     finally:
@@ -215,7 +220,6 @@ def update_employee(current_user_id, employee_id):
 
     except Exception as e:
         conn.rollback()
-        print("\nUPDATE EMPLOYEE ERROR:", str(e))
         return jsonify({"error": "Database error", "details": str(e)}), 500
 
     finally:
@@ -247,7 +251,6 @@ def delete_employee(current_user_id, employee_id):
     except Exception as e:
         if conn:
             conn.rollback()
-        print("\nERROR DELETING EMPLOYEE:", str(e))
         return jsonify({"error": "Server error deleting employee"}), 500
 
     finally:

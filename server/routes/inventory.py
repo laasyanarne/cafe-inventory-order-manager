@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from db import get_connection
-from middleware import token_required
+from middleware import token_required, manager_required
 
 inventory_bp = Blueprint("inventory", __name__)
 
@@ -11,19 +11,12 @@ try:
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        ALTER TABLE inventory 
+        ALTER TABLE inventory
         MODIFY Inv_ID INT NOT NULL AUTO_INCREMENT
     """)
     conn.commit()
-    print(" Inv_ID column confirmed as AUTO_INCREMENT.")
-except mysql.connector.Error as err:
-    # Error 1833 = already constrained / FK conflict — safe to ignore
-    if err.errno == 1833:
-        print(f" Auto-increment setup already configured: {err.msg}")
-    elif err.errno == 1060:
-        print(" Column already auto-incremented.")
-    else:
-        print(f" Inventory auto-increment check: {err}")
+except mysql.connector.Error:
+    pass
 finally:
     try:
         cursor.close()
@@ -32,7 +25,8 @@ finally:
         pass
 #READ
 @inventory_bp.route("", methods=["GET"])
-def get_inventory():
+@token_required
+def get_inventory(current_user_id):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("""
@@ -48,7 +42,7 @@ def get_inventory():
 
 # CREATE
 @inventory_bp.route("", methods=["POST"])
-@token_required
+@manager_required
 def add_inventory(current_user_id):
     data = request.get_json()
     conn = get_connection()
@@ -61,9 +55,8 @@ def add_inventory(current_user_id):
             MODIFY Inv_ID INT NOT NULL AUTO_INCREMENT
         """)
         conn.commit()
-        print(" Ensured Inv_ID is AUTO_INCREMENT before inserting.")
-    except Exception as e:
-        print(f" Auto-increment check skipped: {e}")
+    except Exception:
+        pass
 
     #  Determine fallback Inv_ID manually if needed
     try:
@@ -76,12 +69,10 @@ def add_inventory(current_user_id):
         """, (next_id, data.get("temperature"), data.get("location")))
 
         conn.commit()
-        print(f" Inserted inventory record with Inv_ID={next_id}")
         return jsonify({"message": "Inventory item added!", "Inv_ID": next_id}), 201
 
     except Exception as e:
         conn.rollback()
-        print(f" Insert failed: {e}")
         return jsonify({"error": str(e)}), 500
 
     finally:
@@ -90,7 +81,7 @@ def add_inventory(current_user_id):
 
 #UPDATE
 @inventory_bp.route("/<int:item_id>", methods=["PUT"])
-@token_required
+@manager_required
 def update_inventory(current_user_id, item_id):
     data = request.get_json()
     conn = get_connection()
@@ -108,7 +99,7 @@ def update_inventory(current_user_id, item_id):
 
 #DELETE
 @inventory_bp.route("/<int:item_id>", methods=["DELETE"])
-@token_required
+@manager_required
 def delete_inventory(current_user_id, item_id):
     conn = get_connection()
     cursor = conn.cursor()

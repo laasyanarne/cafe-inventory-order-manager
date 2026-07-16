@@ -1,12 +1,13 @@
 from flask import Blueprint, request, jsonify
 from db import get_connection
-from middleware import token_required
+from middleware import token_required, manager_required
 
 stocks_bp = Blueprint("stocks", __name__)
 
 #READ
 @stocks_bp.route("", methods=["GET"])
-def get_stocks():
+@token_required
+def get_stocks(current_user_id):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("""
@@ -21,7 +22,7 @@ def get_stocks():
 
 #CREATE
 @stocks_bp.route("", methods=["POST"])
-@token_required
+@manager_required
 def add_stock(current_user_id):
     data = request.get_json()
     conn = get_connection()
@@ -37,7 +38,7 @@ def add_stock(current_user_id):
 
 #UPDATE
 @stocks_bp.route("/<int:eid>/<int:ing_id>", methods=["PUT"])
-@token_required
+@manager_required
 def update_stock(current_user_id, eid, ing_id):
     data = request.get_json(force=True)
     if not data or "employee_id" not in data or "ingredient_id" not in data:
@@ -74,7 +75,7 @@ def update_stock(current_user_id, eid, ing_id):
 
 #DELETE
 @stocks_bp.route("/<int:eid>/<int:ing_id>", methods=["DELETE"])
-@token_required
+@manager_required
 def delete_stock(current_user_id, eid, ing_id):
     conn = get_connection()
     cursor = conn.cursor()

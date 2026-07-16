@@ -1,11 +1,11 @@
 from flask import Blueprint, jsonify
 from db import get_connection
-from middleware import token_required
+from middleware import token_required, manager_required
 
 reports_bp = Blueprint("reports", __name__)
 
 @reports_bp.route("/top-products", methods=["GET"])
-@token_required
+@manager_required
 def top_products(current_user_id):
     try:
         conn = get_connection()
@@ -15,7 +15,8 @@ def top_products(current_user_id):
             SELECT
                 p.id,
                 p.name,
-                SUM(ti.Quantity) AS total_qty
+                SUM(ti.Quantity)               AS total_qty,
+                SUM(p.price * ti.Quantity)     AS revenue
             FROM transaction_items ti
             JOIN products p ON ti.product_id = p.id
             GROUP BY p.id, p.name
@@ -27,14 +28,16 @@ def top_products(current_user_id):
         cursor.close()
         conn.close()
 
+        for r in rows:
+            r["revenue"] = float(r["revenue"] or 0)
+
         return jsonify(rows), 200
     except Exception as e:
-        print(f"Error fetching top products: {e}")
         return jsonify({"error": str(e)}), 500
 
 
 @reports_bp.route("/avg-transaction", methods=["GET"])
-@token_required
+@manager_required
 def avg_transaction(current_user_id):
     try:
         conn = get_connection()
@@ -59,12 +62,11 @@ def avg_transaction(current_user_id):
 
         return jsonify(row), 200
     except Exception as e:
-        print(f"Error fetching avg transaction: {e}")
         return jsonify({"error": str(e)}), 500
 
 
 @reports_bp.route("/total-revenue", methods=["GET"])
-@token_required
+@manager_required
 def total_revenue(current_user_id):
     """Total revenue generated from all transactions."""
     try:
@@ -87,12 +89,11 @@ def total_revenue(current_user_id):
 
         return jsonify(result), 200
     except Exception as e:
-        print(f"Error fetching total revenue: {e}")
         return jsonify({"error": str(e)}), 500
 
 
 @reports_bp.route("/customer-count", methods=["GET"])
-@token_required
+@manager_required
 def customer_count(current_user_id):
     """Count of unique customers who have made transactions."""
     try:
@@ -114,12 +115,11 @@ def customer_count(current_user_id):
 
         return jsonify(result), 200
     except Exception as e:
-        print(f"Error fetching customer count: {e}")
         return jsonify({"error": str(e)}), 500
 
 
 @reports_bp.route("/lowest-price", methods=["GET"])
-@token_required
+@manager_required
 def lowest_price(current_user_id):
     """Lowest price point on the menu."""
     try:
@@ -157,12 +157,45 @@ def lowest_price(current_user_id):
 
         return jsonify(result), 200
     except Exception as e:
-        print(f"Error fetching lowest price: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@reports_bp.route("/category-revenue", methods=["GET"])
+@manager_required
+def category_revenue(current_user_id):
+    """Revenue, quantity sold, and order count broken down by product category."""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT
+                p.category,
+                SUM(p.price * ti.Quantity)  AS revenue,
+                SUM(ti.Quantity)            AS qty,
+                COUNT(DISTINCT ti.txn_id)   AS orders
+            FROM transaction_items ti
+            JOIN products p ON ti.product_id = p.id
+            GROUP BY p.category
+            ORDER BY revenue DESC
+        """)
+
+        rows = cursor.fetchall()
+        cursor.close()
+        conn.close()
+
+        for r in rows:
+            r["revenue"] = float(r["revenue"] or 0)
+            r["qty"]     = int(r["qty"]     or 0)
+            r["orders"]  = int(r["orders"]  or 0)
+
+        return jsonify(rows), 200
+    except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
 @reports_bp.route("/employee/shifts", methods=["GET"])
-@token_required
+@manager_required
 def employee_shift_summary(current_user_id):
     """Employee shift summary with total shifts, hours, and averages."""
     try:
@@ -170,22 +203,30 @@ def employee_shift_summary(current_user_id):
         cursor = conn.cursor(dictionary=True)
         
         cursor.execute("""
-            SELECT 
-                EID AS employee_id,
-                COUNT(*) AS total_shifts,
-                SUM(TIMESTAMPDIFF(HOUR, Start_Time, End_Time)) AS total_hours,
-                MIN(TIMESTAMPDIFF(HOUR, Start_Time, End_Time)) AS shortest_shift,
-                MAX(TIMESTAMPDIFF(HOUR, Start_Time, End_Time)) AS longest_shift,
-                AVG(TIMESTAMPDIFF(HOUR, Start_Time, End_Time)) AS avg_shift
-            FROM shifts
-            GROUP BY EID
+            SELECT
+                s.EID                                                          AS employee_id,
+                e.Name                                                         AS name,
+                e.Wages                                                        AS wage,
+                COUNT(*)                                                       AS total_shifts,
+                SUM(TIMESTAMPDIFF(HOUR, s.Start_Time, s.End_Time))            AS total_hours,
+                MIN(TIMESTAMPDIFF(HOUR, s.Start_Time, s.End_Time))            AS shortest_shift,
+                MAX(TIMESTAMPDIFF(HOUR, s.Start_Time, s.End_Time))            AS longest_shift,
+                AVG(TIMESTAMPDIFF(HOUR, s.Start_Time, s.End_Time))            AS avg_shift,
+                SUM(TIMESTAMPDIFF(HOUR, s.Start_Time, s.End_Time)) * e.Wages  AS wage_cost
+            FROM shifts s
+            JOIN employee e ON s.EID = e.EID
+            GROUP BY s.EID, e.Name, e.Wages
+            ORDER BY total_hours DESC
         """)
-        
+
         data = cursor.fetchall()
         cursor.close()
         conn.close()
-        
+
+        for r in data:
+            r["wage"]      = float(r["wage"]      or 0)
+            r["wage_cost"] = float(r["wage_cost"] or 0)
+
         return jsonify(data), 200
     except Exception as e:
-        print(f"Error fetching employee shifts: {e}")
         return jsonify({"error": str(e)}), 500

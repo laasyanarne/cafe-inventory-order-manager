@@ -47,7 +47,23 @@ def manager_required(f):
         
         if role != 'manager':
             return jsonify({'error': 'Manager access required'}), 403
-        
+
         return f(current_user_id, *args, **kwargs)
     return decorated
 
+
+def get_role(user_id):
+    """Return 'manager' or 'employee' for the given user_id."""
+    from db import get_connection
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT Access_level FROM user_account WHERE EID = %s", (user_id,))
+        row = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        if not row:
+            return 'employee'
+        return 'manager' if row['Access_level'] in ['admin', 'manager'] else 'employee'
+    except Exception:
+        return 'employee'

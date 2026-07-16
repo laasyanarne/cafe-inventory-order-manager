@@ -1,0 +1,73 @@
+/* ── Design Tokens ─────────────────────────────────────────────────────────
+   Single source of truth for all colors, spacing, radius, shadow, motion,
+   focus, and typography values used across the application.
+   Warm café-latte palette + three-font system.
+─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Neutral surface — warm cream / parchment ── */
+  --canvas:       #F3EDE0;   /* page background — warm cream */
+  --surface:      #FFFDF8;   /* cards, panels, tables — warm white */
+  --surface-alt:  #F6EFE5;   /* thead, row-hover, subtle fills */
+  --border:       #E2D8C8;   /* standard border */
+  --border-s:     #C9BBAA;   /* stronger border / focus ring base */
+
+  /* ── Text ── */
+  --text-1:       #2B1F13;   /* primary — espresso */
+  --text-2:       #6E5A45;   /* secondary / subtitles — warm brown */
+  --text-3:       #9A8B76;   /* muted / placeholder — warm tan */
+
+  /* ── Brand — deep espresso ── */
+  --brand:        #2B2017;   /* sidebar active, links, form focus */
+  --brand-dark:   #1E160E;   /* hover on brand */
+  --brand-soft:   #F2E7D6;   /* brand-tinted backgrounds */
+
+  /* ── Primary action (CTA buttons) ── */
+  --cta:          #2B2017;
+  --cta-hover:    #3D2E1C;
+
+  /* ── Accent — terracotta ── */
+  --accent:       #A8693F;   /* use sparingly: bars, highlights */
+  --accent-soft:  #F4E7DA;
+
+  /* ── Semantic status — warmed palette ── */
+  --ok:           #3D6B45;   /* sage green */
+  --ok-bg:        #E6EDDD;
+  --ok-border:    #B5CCAA;
+
+  --warn:         #7A5418;   /* amber — darkened for WCAG AA */
+  --warn-bg:      #F4E9D2;
+  --warn-border:  #DEBB7A;
+
+  --danger:       #A04030;   /* warm brick red */
+  --danger-bg:    #F2DED7;
+  --danger-border:#D9A898;
+
+  --info:         #1D4ED8;
+  --info-bg:      #EFF6FF;
+  --info-border:  #BFDBFE;
+
+  /* ── Radius ── */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+
+  /* ── Elevation ── */
+  --sh-sm:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --sh-md:  0 4px 8px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+  --sh-lg:  0 20px 40px rgba(0,0,0,0.10), 0 8px 16px rgba(0,0,0,0.06);
+
+  /* ── Motion ── */
+  --t-fast:   120ms ease;
+  --t-normal: 200ms ease;
+
+  /* ── Focus ring — espresso at 14% opacity ── */
+  --focus-ring: rgba(43, 32, 23, 0.14);
+
+  /* ── Font families ── */
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-ui:      'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'IBM Plex Mono', 'SF Mono', 'Fira Code', 'Menlo', monospace;
+}

@@ -4,7 +4,7 @@ from .promote_employee import employees_bp
 from .customers import customers_bp
 from .shifts import shifts_bp
 from .ingredients import ingredients_bp
-from .transactions import transactions_bp  
+from .transactions import transactions_bp
 
 __all__ = [
     "auth_bp",
@@ -13,6 +13,5 @@ __all__ = [
     "customers_bp",
     "shifts_bp",
     "ingredients_bp",
-    "transactions_bp", 
-    "reports_bp",
+    "transactions_bp",
 ]

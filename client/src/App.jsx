@@ -1,23 +1,29 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { ToastProvider } from "./context/ToastContext";
+import { ConfirmProvider } from "./components/ConfirmDialog";
 
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import AppShell from "./components/AppShell";
 
 import ProductsPage from "./pages/ProductsPage";
 import EmployeesPage from "./pages/EmployeesPage";
-import IngredientsPage from "./pages/IngredientsPage";
 import TransactionsPage from "./pages/TransactionsPage";
-import InventoryPage from "./pages/InventoryPage";
-import StocksPage from "./pages/StocksPage";
+import StockHealthPage from "./pages/StockHealthPage";
 import ReportsPage from "./pages/ReportsPage";
-import EmployeeReportPage from "./pages/EmployeeReportPage";
+import DashboardPage from "./pages/DashboardPage";
+import RecipesPage from "./pages/RecipesPage";
 
 import Customers from "./pages/customers";
 import Shifts from "./pages/shifts";
 
-import Navbar from "./components/Navbar";
+function ManagerRoute({ children }) {
+  const { user } = useAuth();
+  if (user?.role !== "manager") return <Navigate to="/" replace />;
+  return children;
+}
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -26,7 +32,7 @@ function AppContent() {
   if (loading) {
     return (
       <div style={{ padding: "2rem", textAlign: "center" }}>
-        Loading...
+        Loading…
       </div>
     );
   }
@@ -40,26 +46,36 @@ function AppContent() {
   }
 
   return (
-    <>
-      <Navbar />
+    <AppShell>
       <Routes>
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/employees" element={<EmployeesPage />} />
-        <Route path="/ingredients" element={<IngredientsPage />} />
-        <Route path="/transactions" element={<TransactionsPage />} />
+        {/* Primary routes — new IA paths */}
+        <Route path="/" element={<DashboardPage />} />
+        <Route path="/reports" element={<ManagerRoute><ReportsPage /></ManagerRoute>} />
+        <Route path="/menu" element={<ProductsPage />} />
+        <Route path="/menu/recipes" element={<RecipesPage />} />
+        <Route path="/sales/transactions" element={<TransactionsPage />} />
+        <Route path="/sales/customers" element={<Customers />} />
+        <Route path="/inventory" element={<StockHealthPage />} />
+        <Route path="/inventory/products"    element={<Navigate to="/inventory" replace />} />
+        <Route path="/inventory/items"       element={<Navigate to="/inventory" replace />} />
+        <Route path="/inventory/stocks"      element={<Navigate to="/inventory" replace />} />
+        <Route path="/inventory/ingredients" element={<Navigate to="/inventory" replace />} />
+        <Route path="/team/employees" element={<EmployeesPage />} />
+        <Route path="/team/shifts" element={<Shifts />} />
 
-        <Route path="/reports" element={<ReportsPage />} />
-        <Route path="/reports/employee" element={<EmployeeReportPage />} />
+        {/* Legacy redirects — old paths redirect to new paths */}
+        <Route path="/products" element={<Navigate to="/menu" replace />} />
+        <Route path="/transactions" element={<Navigate to="/sales/transactions" replace />} />
+        <Route path="/customers" element={<Navigate to="/sales/customers" replace />} />
+        <Route path="/stocks" element={<Navigate to="/inventory/stocks" replace />} />
+        <Route path="/ingredients" element={<Navigate to="/inventory/ingredients" replace />} />
+        <Route path="/employees" element={<Navigate to="/team/employees" replace />} />
+        <Route path="/shifts" element={<Navigate to="/team/shifts" replace />} />
+        <Route path="/reports/employee" element={<Navigate to="/reports" replace />} />
 
-        <Route path="/customers" element={<Customers />} />
-        <Route path="/shifts" element={<Shifts />} />
-
-        <Route path="/inventory" element={<InventoryPage />} />
-        <Route path="/stocks" element={<StocksPage />} />
-
-        <Route path="*" element={<Navigate to="/products" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </>
+    </AppShell>
   );
 }
 
@@ -67,7 +83,11 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppContent />
+        <ToastProvider>
+          <ConfirmProvider>
+            <AppContent />
+          </ConfirmProvider>
+        </ToastProvider>
       </AuthProvider>
     </BrowserRouter>
   );

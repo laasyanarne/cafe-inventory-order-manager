@@ -1,12 +1,13 @@
 from flask import Blueprint, request, jsonify
 from db import get_connection
-from middleware import token_required
+from middleware import token_required, manager_required
 
 customers_bp = Blueprint('customers', __name__)
 
 # GET all customers
 @customers_bp.route("", methods=["GET"])
-def get_customers():
+@token_required
+def get_customers(current_user_id):
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -26,12 +27,12 @@ def get_customers():
         
         return jsonify(customer_list), 200
     except Exception as e:
-        print(f"Error fetching customers: {e}")
         return jsonify({'error': str(e)}), 500
 
 # GET single customer
 @customers_bp.route("/<int:cid>", methods=["GET"])
-def get_customer(cid):
+@token_required
+def get_customer(current_user_id, cid):
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -39,7 +40,7 @@ def get_customer(cid):
         customer = cursor.fetchone()
         cursor.close()
         conn.close()
-        
+
         if customer:
             return jsonify({
                 'cid': customer['CID'],
@@ -49,12 +50,11 @@ def get_customer(cid):
         else:
             return jsonify({'error': 'Customer not found'}), 404
     except Exception as e:
-        print(f"Error fetching customer: {e}")
         return jsonify({'error': str(e)}), 500
 
 # CREATE customer
 @customers_bp.route("", methods=["POST"])
-@token_required
+@manager_required
 def create_customer(current_user_id):
     try:
         data = request.get_json()
@@ -81,12 +81,11 @@ def create_customer(current_user_id):
         
         return jsonify({'message': 'Customer created successfully'}), 201
     except Exception as e:
-        print(f"Error creating customer: {e}")
         return jsonify({'error': str(e)}), 500
 
 # UPDATE customer
 @customers_bp.route("/<int:cid>", methods=["PUT"])
-@token_required
+@manager_required
 def update_customer(current_user_id, cid):
     try:
         data = request.get_json()
@@ -114,28 +113,26 @@ def update_customer(current_user_id, cid):
         
         return jsonify({'message': 'Customer updated successfully'}), 200
     except Exception as e:
-        print(f"Error updating customer: {e}")
         return jsonify({'error': str(e)}), 500
 
 # DELETE customer
 @customers_bp.route("/<int:cid>", methods=["DELETE"])
-@token_required
+@manager_required
 def delete_customer(current_user_id, cid):
     try:
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute("DELETE FROM customer WHERE CID = %s", (cid,))
-        
+
         if cursor.rowcount == 0:
             cursor.close()
             conn.close()
             return jsonify({'error': 'Customer not found'}), 404
-        
+
         conn.commit()
         cursor.close()
         conn.close()
-        
+
         return jsonify({'message': 'Customer deleted successfully'}), 200
     except Exception as e:
-        print(f"Error deleting customer: {e}")
         return jsonify({'error': str(e)}), 500
