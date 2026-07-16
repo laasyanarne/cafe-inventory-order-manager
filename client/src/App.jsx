@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { ToastProvider } from "./context/ToastContext";
@@ -28,11 +28,23 @@ function ManagerRoute({ children }) {
 function AppContent() {
   const { user, loading } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
+  const [backendSlow, setBackendSlow] = useState(false);
+
+  useEffect(() => {
+    if (!loading) return;
+    const timer = setTimeout(() => setBackendSlow(true), 6000);
+    return () => clearTimeout(timer);
+  }, [loading]);
 
   if (loading) {
     return (
       <div style={{ padding: "2rem", textAlign: "center" }}>
-        Loading…
+        <p>Loading…</p>
+        {backendSlow && (
+          <p style={{ marginTop: "0.75rem", fontSize: "0.875rem", opacity: 0.55 }}>
+            The demo backend is waking up — this can take up to a minute on the free tier.
+          </p>
+        )}
       </div>
     );
   }

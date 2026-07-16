@@ -109,22 +109,27 @@ Optimised at 390 px (iPhone), 768 px (tablet), and 1280 px+ (desktop). Sidebar c
 
 **Infrastructure**
 - Docker Compose — local MySQL container with persistent volume
+- [Render](https://render.com) — free-tier Python web service (backend)
+- [Vercel](https://vercel.com) — Hobby plan (frontend CDN)
+- [Aiven](https://aiven.io) — free-tier managed MySQL (database)
 
 ---
 
 ## Architecture
 
 ```
-Browser (React + Vite)
+Browser (React + Vite)          — Vercel Hobby (CDN)
         │
-        │  HTTP / JSON  (Axios)
+        │  HTTPS / JSON  (Axios)
         ▼
-Flask REST API  (:5001/api/*)
+Flask REST API  (:PORT/api/*)   — Render Free Web Service
         │
-        │  mysql-connector-python
+        │  mysql-connector-python (TLS)
         ▼
-MySQL 8  (:3307 — Docker-mapped)
+MySQL 8                         — Aiven Free Tier (managed, TLS-only)
 ```
+
+**Local development** replaces Render + Aiven with Flask dev server on `:5001` and a Docker-mapped MySQL container on `:3307`.
 
 The frontend is a single-page application. All state is loaded from the API on mount; no server-side rendering. JWT tokens are stored in `localStorage` and attached to every request via an Axios request interceptor. The backend validates each token with `PyJWT` before executing any query. Role checks (`token_required` / `manager_required`) are Flask decorators applied per route.
 
@@ -183,6 +188,10 @@ This project demonstrates end-to-end product engineering at a level beyond typic
 - **Demo-ready data** — seeded with 1,284 realistic transactions, 128 products with ingredient recipes, 10 employees, and a full shift schedule so every page renders meaningful data on first load.
 
 ---
+
+## Live Demo
+
+> The free demo backend (Render free tier) may take up to approximately one minute to wake after a period of inactivity. The app will display a "waking up" notice during this time — subsequent requests are fast.
 
 ## Screenshots
 

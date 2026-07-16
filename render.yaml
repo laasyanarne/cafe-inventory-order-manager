@@ -1,0 +1,45 @@
+# Render Blueprint — Halwa Cafe API (free web service)
+# Docs: https://render.com/docs/blueprint-spec
+#
+# Deploy: connect this repo in the Render dashboard and it will read this file.
+# All env var values marked sync:false must be filled in manually after service
+# creation — Render will prompt you in the "Environment" tab.
+
+services:
+  - type: web
+    name: halwa-cafe-api
+    runtime: python
+    rootDir: server
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    plan: free
+    envVars:
+      # ── Aiven MySQL ──────────────────────────────────────────────────────────
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASS
+        sync: false
+      - key: DB_NAME
+        sync: false
+      # Paste the full PEM content of the Aiven CA certificate here.
+      # Obtain it from: Aiven console → your MySQL service → Overview → CA Certificate → Download
+      - key: DB_SSL_CA
+        sync: false
+      # ── Auth ─────────────────────────────────────────────────────────────────
+      # Generate with: python -c "import secrets; print(secrets.token_urlsafe(48))"
+      - key: SECRET_KEY
+        sync: false
+      # ── CORS ─────────────────────────────────────────────────────────────────
+      # Set to your Vercel deployment URL after frontend deployment.
+      # Example: https://halwa-cafe.vercel.app
+      - key: FRONTEND_URL
+        sync: false
+      # ── Demo accounts ────────────────────────────────────────────────────────
+      - key: DEMO_MANAGER_PASSWORD
+        sync: false
+      - key: DEMO_EMPLOYEE_PASSWORD
+        sync: false

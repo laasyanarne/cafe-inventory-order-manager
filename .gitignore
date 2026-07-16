@@ -1,27 +1,49 @@
 # Node / client
 node_modules/
 dist/
+dist-ssr/
 .vite/
 
 # Python
 __pycache__/
 .venv/
+venv/
 *.pyc
+*.pyo
 
-# env / secrets
+# Environment / secrets — never commit credentials
 .env
 .env.local
+.env.*.local
 credentials.json
 
-# Docker / DB host data
+# Database dumps — may contain PII and credentials
+*.sql
+
+# Docker / DB host data volumes
 db_data/
 halwa_db_data/
 docker-compose.yml
+
+# Logs — generated at runtime
+*.log
+logs/
 
 # IDE
 .vscode/
 .idea/
 .DS_Store
+Thumbs.db
 
-# virtual environment
-venv/
+# Temporary / scratch scripts — dev-time only
+verify_*.mjs
+verify_*.cjs
+*_verify.log
+tmp_*.py
+phase*.py
+
+# PDF / design documents — large binaries
+*.pdf
+
+# Build artefacts
+client/dist/
