@@ -2,7 +2,7 @@
 seed_production.py — safe, idempotent production seed
 
 Creates all tables (IF NOT EXISTS) and inserts portfolio-safe demo data.
-Run against a fresh Railway MySQL database before launching the app.
+Run against a fresh Aiven MySQL database before launching the app.
 
 Usage (from repo root):
     python server/scripts/seed_production.py
