@@ -4,7 +4,7 @@ import api from "../utils/api";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import { useConfirm } from "../components/ConfirmDialog";
-import "./Customers.css";
+import "./customers.css";
 
 function AddCustomerModal({ onClose, onSaved }) {
   const toast = useToast();
